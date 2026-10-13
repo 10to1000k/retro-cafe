@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- پوستر چاپی A4 — برای چاپ: صفحه را باز کن و دکمه‌ی چاپ را بزن -->
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پوستر منوی کافه رترو</title>
+<style>
+  @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+  @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    background:#3a281a;color:#2b1a10;
+    display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px;
+  }
+  .sheet{
+    width:210mm;min-height:285mm;background:#f6ecdc;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:16mm;position:relative;overflow:hidden;
+    box-shadow:0 10px 40px rgba(0,0,0,.4);
+  }
+  .frame{
+    position:absolute;inset:9mm;border:1.2mm solid #b98a4e;border-radius:6mm;pointer-events:none;
+  }
+  .frame::after{content:'';position:absolute;inset:2.5mm;border:.4mm solid #d9b98c;border-radius:4mm}
+  .mark{font-size:12mm;line-height:1;margin-bottom:4mm}
+  h1{font-size:13.5mm;font-weight:700;color:#2b1a10;letter-spacing:.5mm}
+  .sub{font-size:6.2mm;color:#8a6a44;margin-top:3mm;font-weight:400}
+  .qr{
+    width:88mm;height:88mm;margin:10mm auto 6mm;padding:5mm;background:#fff;
+    border:1mm solid #b98a4e;border-radius:5mm;
+  }
+  .qr img{width:100%;height:100%;display:block}
+  .url{direction:ltr;font-size:4.2mm;color:#8a6a44;margin-bottom:9mm;word-break:break-all}
+  .steps{list-style:none;font-size:5.4mm;line-height:2.1;color:#2b1a10}
+  .steps b{color:#b0642a}
+  .foot{margin-top:10mm;font-size:4.6mm;color:#a08055}
+  .noprint{
+    background:#e9b168;color:#241407;font-family:inherit;font-size:16px;font-weight:700;
+    border:0;border-radius:12px;padding:13px 34px;cursor:pointer;
+  }
+  @media print{
+    @page{size:A4 portrait;margin:0}
+    body{background:#fff;padding:0}
+    .sheet{box-shadow:none;width:210mm;min-height:297mm}
+    .noprint{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="frame"></div>
+  <div class="mark">☕</div>
+  <h1>کافه رترو</h1>
+  <div class="sub">منوی دیجیتال ما را ببینید</div>
+  <div class="qr"><img src="qr.png" alt="کد QR منو"></div>
+  <div class="url">10to1000k.github.io/retro-cafe</div>
+  <ol class="steps">
+    <li><b>۱)</b> دوربین گوشی‌ات را باز کن</li>
+    <li><b>۲)</b> روی کد بگیر</li>
+    <li><b>۳)</b> منو فوری بالا می‌آید ✨</li>
+  </ol>
+  <div class="foot">حسِ خوب کافه‌های قدیم</div>
+</div>
+<button class="noprint" onclick="print()">🖨 چاپ پوستر</button>
+</body>
+</html>

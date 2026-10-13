@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!--
+  ┌─────────────────────────────────────────────────────────┐
+  │        منوی دیجیتال کافه رترو  —  نسخه‌ی موبایل          │
+  │                                                         │
+  │   برای ویرایش منو، به بخش «داده‌های منو» پایین‌تر برو.   │
+  │   (همین جا در گیت‌هاب قابل ویرایشه — README را ببین)     │
+  └─────────────────────────────────────────────────────────┘
+-->
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17100b">
+<meta name="description" content="منوی دیجیتال کافه رترو">
+<meta property="og:title" content="کافه رترو | منو">
+<meta property="og:type" content="website">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<title>کافه رترو | منو</title>
+<style>
+  @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
+  @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
+  @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
+
+  :root{
+    --text:#f6ecdc;
+    --muted:#c7ad8e;
+    --accent:#e9b168;
+    --accent-dark:#241407;
+    --card:rgba(32,21,14,.72);
+    --line:rgba(255,255,255,.09);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none!important}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Vazirmatn','Segoe UI',Tahoma,sans-serif;
+    color:var(--text);
+    min-height:100vh;
+    padding-bottom:calc(28px + env(safe-area-inset-bottom));
+    overflow-x:hidden;
+  }
+
+  /* ── پس‌زمینه: عکس + لایه‌ی تیره (اگه عکس نباشه، گرادیان قهوه‌ای) ── */
+  .bg{position:fixed;inset:0;z-index:-3;background:linear-gradient(175deg,#41291a 0%,#2b1a10 45%,#170e08 100%)}
+  .bg-photo{position:fixed;inset:0;z-index:-2;background:url('images/background.jpg') center/cover no-repeat;opacity:.9}
+  .bg-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,14,8,.62) 0%,rgba(23,14,8,.55) 30%,rgba(23,14,8,.88) 100%)}
+
+  /* ── هدر ── */
+  .hero{text-align:center;padding:44px 20px 20px}
+  .hero .mark{
+    width:76px;height:76px;margin:0 auto 14px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:2.1rem;
+    background:rgba(255,255,255,.07);border:1px solid rgba(233,177,104,.4);
+    box-shadow:0 8px 30px rgba(0,0,0,.35);
+  }
+  .hero h1{font-size:2rem;font-weight:700;letter-spacing:.3px;text-shadow:0 2px 18px rgba(0,0,0,.5)}
+  .hero .tagline{color:var(--muted);font-size:.95rem;margin-top:6px}
+  .hero .hours{
+    display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+    padding:7px 16px;border-radius:999px;font-size:.82rem;color:var(--text);
+    background:rgba(255,255,255,.07);border:1px solid var(--line);backdrop-filter:blur(8px);
+  }
+
+  /* ── نوار چسبان: جستجو + دسته‌بندی‌ها ── */
+  .bar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(20,13,9,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+    padding:10px 14px 4px;
+  }
+  .mini{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    font-size:.92rem;font-weight:700;color:var(--accent);
+    max-height:0;opacity:0;overflow:hidden;transition:max-height .25s ease,opacity .25s ease,margin .25s ease;
+  }
+  .bar.scrolled .mini{max-height:34px;opacity:1;margin-bottom:2px}
+  .mini::before,.mini::after{content:'';height:1px;flex:1;max-width:60px;background:linear-gradient(90deg,transparent,rgba(233,177,104,.5))}
+  .mini::after{background:linear-gradient(90deg,rgba(233,177,104,.5),transparent)}
+  .search{position:relative;margin-bottom:8px}
+  .search input{
+    width:100%;padding:10px 40px 10px 14px;border-radius:13px;
+    background:rgba(255,255,255,.07);border:1px solid var(--line);
+    color:var(--text);font:inherit;font-size:.9rem;outline:none;
+  }
+  .search input::placeholder{color:rgba(199,173,142,.75)}
+  .search input:focus{border-color:rgba(233,177,104,.55)}
+  .search .ic{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:.95rem;pointer-events:none;opacity:.8}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{
+    white-space:nowrap;padding:8px 15px;border-radius:999px;font-size:.85rem;font-weight:500;
+    color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--line);
+    cursor:pointer;transition:all .2s;flex-shrink:0;
+  }
+  .chip.on{background:linear-gradient(135deg,#f0c078,#d9973f);color:var(--accent-dark);font-weight:700;border-color:transparent}
+
+  /* ── بدنه‌ی منو ── */
+  main{max-width:560px;margin:0 auto;padding:4px 16px}
+  section{scroll-margin-top:158px;margin-top:28px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:13px}
+  .sec-head .ico{font-size:1.25rem}
+  .sec-head h2{font-size:1.12rem;font-weight:700;white-space:nowrap}
+  .sec-head .rule{flex:1;height:1px;background:linear-gradient(-90deg,rgba(233,177,104,.4),transparent)}
+
+  .card{
+    display:flex;align-items:center;gap:13px;
+    background:var(--card);border:1px solid var(--line);border-radius:17px;
+    padding:13px 15px;margin-bottom:10px;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+  }
+  .card .info{flex:1;min-width:0}
+  .card .nm{font-size:.98rem;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .card .ds{color:var(--muted);font-size:.8rem;margin-top:3px;line-height:1.8}
+  .card .pr{color:var(--accent);font-weight:700;font-size:.95rem;margin-top:7px}
+  .thumb{
+    width:66px;height:66px;border-radius:14px;flex-shrink:0;overflow:hidden;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+  .bd{font-size:.67rem;padding:2.5px 9px;border-radius:999px;border:1px solid;font-weight:500}
+  .bd.special{color:#f2c57e;border-color:rgba(242,197,126,.45);background:rgba(242,197,126,.12)}
+  .bd.new{color:#96d8a0;border-color:rgba(150,216,160,.4);background:rgba(150,216,160,.1)}
+  .bd.soldout{color:#e29a9a;border-color:rgba(226,154,154,.4);background:rgba(226,154,154,.1)}
+  .card.out{opacity:.5}
+  .card.out .pr{text-decoration:line-through;text-decoration-color:rgba(226,154,154,.6)}
+
+  /* ── گالری ── */
+  .gallery{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+  .gallery::-webkit-scrollbar{display:none}
+  .gallery figure{
+    position:relative;flex-shrink:0;width:148px;height:190px;border-radius:16px;overflow:hidden;
+    border:1px solid var(--line);cursor:zoom-in;
+  }
+  .gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+  .gallery figure:active img{transform:scale(1.06)}
+  .gallery figcaption{
+    position:absolute;right:0;left:0;bottom:0;padding:22px 10px 8px;font-size:.72rem;
+    background:linear-gradient(0deg,rgba(10,6,3,.85),transparent);
+  }
+  #lightbox{
+    position:fixed;inset:0;z-index:200;background:rgba(8,5,3,.94);
+    display:none;align-items:center;justify-content:center;padding:18px;cursor:zoom-out;
+  }
+  #lightbox.on{display:flex}
+  #lightbox img{max-width:100%;max-height:100%;border-radius:14px}
+
+  /* ── جستجو ── */
+  #results{margin-top:22px}
+  .res-title{color:var(--muted);font-size:.85rem;margin-bottom:13px;text-align:center}
+  .res-title b{color:var(--accent)}
+  .empty{text-align:center;color:var(--muted);padding:46px 0;font-size:.9rem}
+  .empty .big{font-size:2.2rem;display:block;margin-bottom:10px}
+  body.searching .hero{display:none}
+  body.searching section{display:none}
+  body.searching #sec-gallery{display:none}
+  body.searching .chips{display:none}
+
+  /* ── فوتر ── */
+  footer{max-width:560px;margin:46px auto 0;padding:0 20px;text-align:center}
+  footer .rule{height:1px;background:linear-gradient(90deg,transparent,rgba(233,177,104,.4),transparent);margin-bottom:22px}
+  .tel{
+    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
+    background:linear-gradient(135deg,#f0c078,#d9973f);color:var(--accent-dark);
+    font-weight:700;font-size:.95rem;padding:12px 30px;border-radius:15px;
+    box-shadow:0 6px 24px rgba(217,151,63,.3);
+  }
+  .frow{color:var(--muted);font-size:.85rem;line-height:2.2;margin-top:13px}
+  .frow a{color:var(--accent);text-decoration:none}
+  .credit{margin-top:22px;font-size:.75rem;color:rgba(199,173,142,.55)}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="bg-photo"></div>
+
+<header class="hero">
+  <div class="mark" id="hero-mark">☕</div>
+  <h1 id="hero-name"></h1>
+  <p class="tagline" id="hero-tagline"></p>
+  <span class="hours" id="hero-hours-pill">🕐 <span id="hero-hours"></span></span>
+</header>
+
+<nav class="bar" id="bar">
+  <div class="mini" id="mini">☕ <span id="mini-name"></span></div>
+  <div class="search">
+    <input id="q" type="search" placeholder="جستجو در منو…" autocomplete="off">
+    <span class="ic">🔍</span>
+  </div>
+  <div class="chips" id="chips"></div>
+</nav>
+
+<main id="menu"></main>
+<div id="results" hidden></div>
+
+<footer>
+  <div class="rule"></div>
+  <a class="tel" id="f-tel" href="#" hidden>📞 تماس با کافه</a>
+  <div class="frow" id="f-address" hidden></div>
+  <div class="frow" id="f-ig" hidden></div>
+  <div class="credit" id="f-hours" hidden></div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ⚙️  داده‌های منو — همه‌چیز رو از همین‌جا تغییر بده
+   ═══════════════════════════════════════════════════════════
+
+   📌 راهنمای سریع:
+   • price: قیمت به «هزار تومان» — مثلاً ۱۲۵ یعنی ۱۲۵ هزار تومان
+   • badge: "" (هیچ) | "special" (پیشنهاد ویژه) | "new" (جدید) | "soldout" (ناتمام)
+   • desc: توضیح کوتاه آیتم — اگه نمی‌خوای خالی بذار ""
+   • برای دسته‌ی جدید، یکی از بلوک‌های { ... } رو کپی کن و تغییرش بده
+   • ساعت کاری، شماره تلفن، آدرس و اینستاگرام رو که داشتی، همین بالا پر کن
+     (هر کدوم خالی باشه، از منو حذف می‌شه)
+*/
+
+const CAFE = {
+  name:      "کافه رترو",
+  tagline:   "حسِ خوب کافه‌های قدیم",
+  hours:     "",                    // مثل: "همه‌ی روزها ۴ عصر تا ۱۲ شب"
+  phone:     "",                    // مثل: "09121234567"
+  instagram: "",                    // مثل: "retro.cafe" (بدون @)
+  address:   "",                    // مثل: "تهران، خیابان ...، پلاک ۱۲"
+};
+
+const CATEGORIES = [
+  {
+    id: "hot", icon: "☕", name: "نوشیدنی گرم",
+    items: [
+      { name: "اسپرسو دوبل",    desc: "",                              price: 115, badge: "",        img: "" },
+      { name: "آمریکانو",       desc: "",                              price: 125, badge: "",        img: "" },
+      { name: "کاپوچینو",       desc: "",                              price: 120, badge: "",        img: "" },
+      { name: "لاته",           desc: "",                              price: 125, badge: "",        img: "" },
+      { name: "موکا",           desc: "",                              price: 225, badge: "",        img: "" },
+      { name: "کارامل ماکیاتو", desc: "اسپرسو، شیر و شیره‌ی کارامل",     price: 225, badge: "",        img: "" },
+      { name: "هات چاکلت",      desc: "",                              price: 200, badge: "",        img: "" },
+      { name: "چای ماسالا",     desc: "چای هندی با شیر و ادویه",        price: 200, badge: "",        img: "" },
+    ],
+  },
+  {
+    id: "herbal", icon: "🫖", name: "دمنوش",
+    items: [
+      { name: "دمنوش گل گاوزبان",   desc: "",                          price: 145, badge: "",        img: "" },
+      { name: "دمنوش آرام‌جان",     desc: "",                          price: 145, badge: "",        img: "" },
+      { name: "دمنوش به‌لیمو",      desc: "",                          price: 145, badge: "",        img: "" },
+      { name: "دمنوش سیب به دارچین", desc: "",                         price: 170, badge: "",        img: "" },
+      { name: "چای سبز",            desc: "",                          price: 170, badge: "",        img: "" },
+      { name: "چای مراکشی",         desc: "",                          price: 145, badge: "",        img: "" },
+      { name: "چای ترش",            desc: "",                          price: 185, badge: "",        img: "" },
+      { name: "چای سیاه",           desc: "",                          price: 75,  badge: "",        img: "" },
+    ],
+  },
+  {
+    id: "ice", icon: "🧊", name: "آیس کافی",
+    items: [
+      { name: "آیس آمریکانو", desc: "",                               price: 145, badge: "",        img: "" },
+      { name: "آیس لاته",     desc: "",                               price: 205, badge: "",        img: "" },
+      { name: "آیس کارامل",   desc: "",                               price: 225, badge: "",        img: "" },
+      { name: "آیس موکا",     desc: "",                               price: 225, badge: "",        img: "" },
+      { name: "آفوگاتو",      desc: "بستنی وانیل با شات اسپرسو داغ",   price: 190, badge: "",        img: "" },
+    ],
+  },
+  {
+    id: "cool", icon: "🍹", name: "خنک بنوش",
+    items: [
+      { name: "لیموناد",         desc: "",                             price: 180, badge: "",        img: "" },
+      { name: "موهیتو",          desc: "نعنا، لیموترش و سودا",          price: 190, badge: "",        img: "" },
+      { name: "پیناکولادا",      desc: "آناناس، نارگیل و خامه",         price: 245, badge: "",        img: "" },
+      { name: "آمازون",          desc: "",                             price: 205, badge: "",        img: "" },
+      { name: "اسموتی هندوانه",  desc: "",                             price: 145, badge: "",        img: "" },
+      { name: "اسموتی طالبی",    desc: "",                             price: 175, badge: "",        img: "" },
+      { name: "شربت بیدمشک",     desc: "",                             price: 145, badge: "",        img: "" },
+      { name: "شربت زعفران",     desc: "",                             price: 180, badge: "",        img: "" },
+      { name: "شربت نعنا",       desc: "",                             price: 145, badge: "",        img: "" },
+      { name: "شربت بهارنارنج",  desc: "",                             price: 145, badge: "",        img: "" },
+    ],
+  },
+  {
+    id: "shake", icon: "🥤", name: "شیک",
+    items: [
+      { name: "شیک وانیل",       desc: "",                             price: 245, badge: "",        img: "" },
+      { name: "شیک شکلات",       desc: "",                             price: 245, badge: "",        img: "" },
+      { name: "شیک توت‌فرنگی",   desc: "",                             price: 245, badge: "",        img: "" },
+      { name: "شیک نوتلا",       desc: "",                             price: 300, badge: "",        img: "" },
+      { name: "شیک اسپرسو",      desc: "",                             price: 300, badge: "",        img: "" },
+      { name: "شیک بادام‌زمینی", desc: "",                             price: 300, badge: "",        img: "" },
+    ],
+  },
+  {
+    id: "food", icon: "🍽️", name: "غذا",
+    items: [
+      { name: "سیب‌زمینی ساده",  desc: "",                             price: 215, badge: "",        img: "" },
+      { name: "سیب آلفردو",      desc: "",                             price: 385, badge: "",        img: "" },
+      { name: "سیب ویژه",        desc: "",                             price: 530, badge: "special", img: "" },
+      { name: "سالاد سزار",      desc: "",                             price: 460, badge: "",        img: "" },
+      { name: "پاستا آلفردو",    desc: "",                             price: 490, badge: "",        img: "" },
+      { name: "پاستا پستو",      desc: "",                             price: 575, badge: "",        img: "" },
+      { name: "برگر ویژه رترو",  desc: "",                             price: 590, badge: "special", img: "" },
+      { name: "پنیری مرغ گریل",  desc: "",                             price: 545, badge: "",        img: "" },
+      { name: "پنیری مرغ پستو",  desc: "",                             price: 580, badge: "",        img: "" },
+    ],
+  },
+  {
+    id: "hookah", icon: "💨", name: "قلیان",
+    items: [
+      { name: "قلیان دو سیب",        desc: "",                         price: 245, badge: "",        img: "" },
+      { name: "قلیان لاو",           desc: "",                         price: 245, badge: "",        img: "" },
+      { name: "قلیان مسکو",          desc: "",                         price: 245, badge: "",        img: "" },
+      { name: "قلیان آدامس دارچین",  desc: "",                         price: 345, badge: "",        img: "" },
+    ],
+  },
+];
+
+/* 📸 گالری حال‌وهوا — عکس‌ها توی پوشه‌ی images هستن
+   اگه گالری رو نمی‌خوای، بین [ ] رو خالی کن: [ ]               */
+const GALLERY = [
+  { img: "images/gallery-1.jpg", cap: "سالن کافه" },
+  { img: "images/gallery-2.jpg", cap: "بار و ویترین" },
+  { img: "images/gallery-3.jpg", cap: "بار قهوه" },
+  { img: "images/gallery-4.jpg", cap: "جزئیات رترو" },
+];
+
+/* ═══════════════ پایان داده‌ها — از این‌جا به بعد دست نزن ═══════════════ */
+
+const $ = s => document.querySelector(s);
+const fa = n => Number(n).toLocaleString('fa-IR');
+const faDigits = s => String(s).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+const norm = s => String(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/\u200c/g,' ').toLowerCase();
+const BADGE = {
+  special:  { txt: 'پیشنهاد ویژه', cls: 'special' },
+  new:      { txt: 'جدید',         cls: 'new' },
+  soldout:  { txt: 'ناتمام',       cls: 'soldout' },
+};
+const priceTxt = p => fa(p) + ' هزار تومان';
+
+/* هدر */
+document.title = CAFE.name + ' | منو';
+$('#hero-name').textContent = CAFE.name;
+$('#hero-tagline').textContent = CAFE.tagline;
+if (!CAFE.tagline) $('#hero-tagline').remove();
+if (CAFE.hours) { $('#hero-hours').textContent = CAFE.hours; } else { $('#hero-hours-pill').remove(); }
+
+/* فوتر — هر فیلدی خالی باشه نمایش داده نمی‌شه */
+if (CAFE.phone) {
+  $('#f-tel').hidden = false;
+  $('#f-tel').href = 'tel:+' + String(CAFE.phone).replace(/^\+/, '');
+  $('#f-tel').innerHTML = '📞 تماس با کافه — <span dir="ltr">' + faDigits(CAFE.phone) + '</span>';
+}
+if (CAFE.address) { $('#f-address').hidden = false; $('#f-address').textContent = '📍 ' + CAFE.address; }
+if (CAFE.instagram) {
+  $('#f-ig').hidden = false;
+  $('#f-ig').innerHTML = 'اینستاگرام: <a href="https://instagram.com/' + encodeURIComponent(CAFE.instagram) + '" dir="ltr">@' + CAFE.instagram + '</a>';
+}
+if (CAFE.hours) { $('#f-hours').hidden = false; $('#f-hours').textContent = CAFE.hours; }
+
+/* ساخت دسته‌بندی‌ها و کارت‌ها */
+const chipsEl = $('#chips'), menuEl = $('#menu');
+CATEGORIES.forEach((cat, i) => {
+  const chip = document.createElement('button');
+  chip.className = 'chip' + (i === 0 ? ' on' : '');
+  chip.dataset.cat = cat.id;
+  chip.textContent = cat.icon + ' ' + cat.name;
+  chip.onclick = () => {
+    document.getElementById('sec-' + cat.id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setActive(cat.id);
+  };
+  chipsEl.appendChild(chip);
+
+  const sec = document.createElement('section');
+  sec.id = 'sec-' + cat.id;
+  sec.innerHTML = '<div class="sec-head"><span class="ico">' + cat.icon + '</span><h2>' + cat.name + '</h2><span class="rule"></span></div>';
+  cat.items.forEach(it => {
+    const b = BADGE[it.badge];
+    const card = document.createElement('article');
+    card.className = 'card' + (it.badge === 'soldout' ? ' out' : '');
+    card.innerHTML =
+      '<div class="info">' +
+        '<div class="nm">' + it.name + (b ? ' <span class="bd ' + b.cls + '">' + b.txt + '</span>' : '') + '</div>' +
+        (it.desc ? '<div class="ds">' + it.desc + '</div>' : '') +
+        '<div class="pr">' + priceTxt(it.price) + '</div>' +
+      '</div>' +
+      (it.img
+        ? '<div class="thumb"><img src="' + it.img + '" alt="' + it.name + '" loading="lazy" onerror="this.parentNode.textContent=\'' + cat.icon + '\'"></div>'
+        : '<div class="thumb">' + cat.icon + '</div>');
+    sec.appendChild(card);
+  });
+  menuEl.appendChild(sec);
+});
+
+/* گالری + لایت‌باکس */
+if (GALLERY.length) {
+  const sec = document.createElement('section');
+  sec.id = 'sec-gallery';
+  sec.innerHTML = '<div class="sec-head"><span class="ico">📸</span><h2>حال‌وهوای رترو</h2><span class="rule"></span></div>';
+  const g = document.createElement('div');
+  g.className = 'gallery';
+  GALLERY.forEach(ph => {
+    const f = document.createElement('figure');
+    f.innerHTML = '<img src="' + ph.img + '" alt="' + ph.cap + '" loading="lazy"><figcaption>' + ph.cap + '</figcaption>';
+    f.onclick = () => openLightbox(ph.img);
+    g.appendChild(f);
+  });
+  sec.appendChild(g);
+  menuEl.appendChild(sec);
+}
+const lb = document.createElement('div');
+lb.id = 'lightbox';
+lb.innerHTML = '<img alt="">';
+lb.onclick = () => { lb.classList.remove('on'); document.body.style.overflow = ''; };
+document.body.appendChild(lb);
+function openLightbox(src) {
+  lb.querySelector('img').src = src;
+  lb.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+/* نوار چسبان: برند کوچک + اسکرول‌اسپای */
+const bar = $('#bar'), hero = $('.hero');
+function setActive(id) {
+  chipsEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c.dataset.cat === id));
+  const on = chipsEl.querySelector('.chip.on');
+  if (on) on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+}
+let ticking = false;
+addEventListener('scroll', () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    ticking = false;
+    bar.classList.toggle('scrolled', scrollY > hero.offsetHeight - 60);
+    if (document.body.classList.contains('searching')) return;
+    let cur = CATEGORIES[0].id;
+    for (const c of CATEGORIES) {
+      if (document.getElementById('sec-' + c.id).offsetTop - 170 <= scrollY) cur = c.id;
+    }
+    const active = chipsEl.querySelector('.chip.on');
+    if (!active || active.dataset.cat !== cur) setActive(cur);
+  });
+}, { passive: true });
+
+/* جستجو */
+const q = $('#q'), resEl = $('#results');
+q.addEventListener('input', () => {
+  const query = norm(q.value).trim();
+  resEl.innerHTML = '';
+  if (!query) {
+    document.body.classList.remove('searching');
+    resEl.hidden = true;
+    return;
+  }
+  document.body.classList.add('searching');
+  resEl.hidden = false;
+  const hits = [];
+  CATEGORIES.forEach(cat => cat.items.forEach(it => {
+    if (norm(it.name + ' ' + (it.desc || '')).includes(query))
+      hits.push({ cat, it });
+  }));
+  const title = document.createElement('p');
+  title.className = 'res-title';
+  title.innerHTML = hits.length
+    ? faDigits(hits.length) + ' مورد برای «<b>' + q.value.trim() + '</b>» پیدا شد'
+    : '';
+  resEl.appendChild(title);
+  if (!hits.length) {
+    resEl.innerHTML = '<div class="empty"><span class="big">🔍</span>چیزی با این اسم توی منو پیدا نشد</div>';
+    return;
+  }
+  hits.forEach(({ cat, it }) => {
+    const b = BADGE[it.badge];
+    const card = document.createElement('article');
+    card.className = 'card' + (it.badge === 'soldout' ? ' out' : '');
+    card.innerHTML =
+      '<div class="info">' +
+        '<div class="nm">' + it.name +
+          (b ? ' <span class="bd ' + b.cls + '">' + b.txt + '</span>' : '') +
+          ' <span style="color:var(--muted);font-size:.72rem;font-weight:400">' + cat.icon + ' ' + cat.name + '</span>' +
+        '</div>' +
+        (it.desc ? '<div class="ds">' + it.desc + '</div>' : '') +
+        '<div class="pr">' + priceTxt(it.price) + '</div>' +
+      '</div>' +
+      '<div class="thumb">' + cat.icon + '</div>';
+    resEl.appendChild(card);
+  });
+});
+
+/* PWA — کش آفلاین بعد از اولین بازدید */
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
