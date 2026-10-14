@@ -69,16 +69,21 @@
   .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--line)}
   .divider span{width:34px;height:3px;border-radius:2px;background:var(--accent)}
 
-  /* ── خوش‌آمد ── */
-  .welcome-cta{text-align:center;padding:14px 24px 4px}
+  /* ── خوش‌آمد: دکمه‌ی چسبان پایین صفحه ── */
+  #view-home{min-height:100dvh;display:flex;flex-direction:column}
+  #view-home .hero{flex-shrink:0}
+  .bottom-cta{
+    margin-top:auto;position:sticky;bottom:0;z-index:40;
+    padding:20px 24px calc(22px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(250,246,238,0),var(--bg) 55%);
+  }
   .cta{
-    display:block;max-width:320px;margin:0 auto;text-decoration:none;text-align:center;
+    display:block;max-width:340px;margin:0 auto;text-decoration:none;text-align:center;
     background:var(--ink);color:#FAF6EE;
-    font-weight:700;font-size:1.02rem;padding:15px 20px;border-radius:16px;
+    font-weight:700;font-size:1.05rem;padding:16px 20px;border-radius:16px;
     box-shadow:0 10px 26px rgba(36,26,16,.28);
   }
   .cta:active{transform:scale(.98)}
-  .welcome-hint{color:var(--muted);font-size:.82rem;margin-top:12px}
 
   /* ── توپ‌بار ── */
   .topbar{
@@ -137,8 +142,11 @@
   }
 
   /* ── بدنه ── */
-  .view{max-width:560px;margin:0 auto;padding:4px 16px;animation:fadeUp .28s ease}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .view{max-width:560px;margin:0 auto;padding:4px 16px}
+  @keyframes inFwd{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+  @keyframes inBack{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+  .view.enter-fwd{animation:inFwd .26s cubic-bezier(.22,.8,.3,1)}
+  .view.enter-back{animation:inBack .26s cubic-bezier(.22,.8,.3,1)}
   main{max-width:560px;margin:0 auto;padding:4px 0}
   #items{margin-top:10px}
   section{margin-top:26px}
@@ -208,11 +216,9 @@
     <div><span class="hours" id="hero-hours-pill">🕐 <span id="hero-hours"></span></span></div>
     <div class="divider"><span></span></div>
   </header>
-  <div class="welcome-cta">
+  <div class="bottom-cta">
     <a class="cta" href="#/menu">مشاهده منو</a>
-    <p class="welcome-hint">دسته‌ی مورد علاقه‌ات را انتخاب کن</p>
   </div>
-  <div class="catlist" id="catlist-home"></div>
 </section>
 
 <!-- ویو ۲: دسته‌ها + جستجو -->
@@ -436,7 +442,6 @@ function buildCatList(el) {
   el.innerHTML = '';
   CATEGORIES.forEach(cat => el.appendChild(catRow(cat)));
 }
-buildCatList($('#catlist-home'));
 buildCatList($('#catlist-menu'));
 
 /* چیپ‌های دسته در ویو آیتم‌ها */
@@ -465,11 +470,21 @@ function renderItems(id) {
   cat.items.forEach(it => itemsEl.appendChild(itemCard(cat, it, false)));
 }
 
-/* روتر: خوش‌آمد ← دسته‌ها ← آیتم‌ها (دکمه برگشت گوشی هم کار می‌کند) */
+/* روتر: خوش‌آمد ← دسته‌ها ← آیتم‌ها (دکمه برگشت گوشی هم کار می‌کند)
+   ترنزیشن جهت‌دار: جلو رفتن از چپ، برگشتن از راست */
 const views = { home: $('#view-home'), menu: $('#view-menu'), items: $('#view-items') };
-function show(name) {
-  Object.keys(views).forEach(k => { views[k].hidden = (k !== name); });
+const DEPTH = { home: 0, menu: 1, items: 2 };
+let currentView = 'home';
+function show(name, dir) {
+  Object.keys(views).forEach(k => {
+    const v = views[k];
+    v.hidden = (k !== name);
+    v.classList.remove('enter-fwd', 'enter-back');
+  });
+  if (dir > 0) views[name].classList.add('enter-fwd');
+  else if (dir < 0) views[name].classList.add('enter-back');
   scrollTo(0, 0);
+  currentView = name;
 }
 function route() {
   const h = location.hash || '#/';
@@ -477,16 +492,17 @@ function route() {
   resEl.innerHTML = '';
   resEl.hidden = true;
   document.body.classList.remove('searching');
+  let target = 'home';
   if (h.indexOf('#/cat/') === 0) {
     renderItems(h.slice(6));
-    show('items');
+    target = 'items';
   } else if (h === '#/menu') {
     document.title = 'منو | ' + CAFE.name;
-    show('menu');
+    target = 'menu';
   } else {
     document.title = CAFE.name + ' | خوش آمدید';
-    show('home');
   }
+  show(target, DEPTH[target] - DEPTH[currentView]);
 }
 addEventListener('hashchange', route);
 
