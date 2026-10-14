@@ -59,6 +59,11 @@
     box-shadow:var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.15);
   }
   .hero h1{font-size:1.9rem;font-weight:800;letter-spacing:0}
+  .hero .latin{
+    font-family:Georgia,'Times New Roman',serif;font-weight:700;
+    font-size:.82rem;letter-spacing:.42em;text-indent:.42em;
+    color:var(--muted);margin-top:8px;
+  }
   .hero .tagline{color:var(--muted);font-size:.92rem;margin-top:8px}
   .hero .hours{
     display:inline-flex;align-items:center;gap:7px;margin-top:16px;
@@ -68,6 +73,22 @@
   .divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:26px auto 6px;max-width:280px}
   .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--line)}
   .divider span{width:34px;height:3px;border-radius:2px;background:var(--accent)}
+
+  /* ── نوار پیشنهادهای ویژه در خوش‌آمد ── */
+  .feat-wrap{margin:10px 0 0}
+  .feat-head{font-weight:800;font-size:.95rem;margin:0 4px 12px}
+  .feat-head .sub{display:block;font-weight:400;color:var(--muted);font-size:.75rem;margin-top:3px}
+  .feat-strip{display:flex;gap:12px;overflow-x:auto;padding:4px 4px 16px;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -4px}
+  .feat-strip::-webkit-scrollbar{display:none}
+  .feat{
+    flex:0 0 150px;scroll-snap-align:start;text-decoration:none;color:var(--ink);
+    background:var(--surface);border:1px solid rgba(36,26,16,.05);border-radius:18px;
+    overflow:hidden;box-shadow:var(--shadow-sm);
+  }
+  .feat img{width:100%;height:108px;object-fit:cover;display:block;background:var(--accent-soft)}
+  .feat .fb{padding:10px 12px 12px}
+  .feat .fn{font-weight:700;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .feat .fp{color:var(--accent-deep);font-weight:800;font-size:.78rem;margin-top:5px}
 
   /* ── خوش‌آمد: دکمه‌ی چسبان پایین صفحه ── */
   #view-home{min-height:100dvh;display:flex;flex-direction:column}
@@ -108,16 +129,6 @@
   .search input::placeholder{color:#B9A88F}
   .search input:focus{border-color:var(--accent)}
   .search .ic{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:.95rem;pointer-events:none;opacity:.65}
-
-  /* ── چیپ‌های دسته ── */
-  .chips{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 6px;scrollbar-width:none;max-width:560px;margin:0 auto}
-  .chips::-webkit-scrollbar{display:none}
-  .chip{
-    flex-shrink:0;text-decoration:none;white-space:nowrap;
-    padding:9px 16px;border-radius:999px;font-size:.83rem;font-weight:500;
-    background:var(--surface);border:1px solid var(--line);color:var(--muted);
-  }
-  .chip.on{background:var(--ink);border-color:var(--ink);color:#FAF6EE;font-weight:700}
 
   /* ── لیست دسته‌ها ── */
   .catlist{margin:16px 0 6px}
@@ -212,10 +223,15 @@
   <header class="hero">
     <div class="mark">R</div>
     <h1 id="hero-name"></h1>
+    <p class="latin">RETRO CAFE</p>
     <p class="tagline" id="hero-tagline"></p>
     <div><span class="hours" id="hero-hours-pill">🕐 <span id="hero-hours"></span></span></div>
     <div class="divider"><span></span></div>
   </header>
+  <div class="feat-wrap">
+    <div class="feat-head">⭐ پیشنهادهای ما<span class="sub">پرطرفدارترین‌های رترو</span></div>
+    <div class="feat-strip" id="feat-strip"></div>
+  </div>
   <div class="bottom-cta">
     <a class="cta" href="#/menu">مشاهده منو</a>
   </div>
@@ -242,7 +258,6 @@
     <div class="topbar-title"><span id="items-ico"></span> <span id="items-name"></span></div>
     <span class="count" id="items-count"></span>
   </div></div>
-  <div class="chips" id="chips"></div>
   <main id="items"></main>
 </section>
 
@@ -275,7 +290,7 @@ const CAFE = {
   hours:     "۱۰ صبح تا ۱۰ شب",
   phone:     "09369192297",
   instagram: "Caferetro_ir",
-  address:   "نسیم شهر، خیابان اصلی، جنب درمانگاه قایم",
+  address:   "نسیم شهر، خیابان اصلی، جنب درمانگاه قائم",
 };
 
 const CATEGORIES = [
@@ -389,8 +404,10 @@ if (CAFE.hours) { $('#hero-hours').textContent = CAFE.hours; } else { $('#hero-h
 /* فوتر — هر فیلدی خالی باشه نمایش داده نمی‌شه */
 if (CAFE.phone) {
   $('#f-tel').hidden = false;
-  $('#f-tel').href = 'tel:+' + String(CAFE.phone).replace(/^\+/, '');
-  $('#f-tel').innerHTML = '📞 تماس با کافه — <span dir="ltr">' + faDigits(CAFE.phone) + '</span>';
+  const dial = String(CAFE.phone).replace(/^\+/, '');
+  const intl = dial.startsWith('0') ? '+98' + dial.slice(1) : '+' + dial;
+  $('#f-tel').href = 'tel:' + intl;
+  $('#f-tel').innerHTML = '📞 تماس با کافه';
 }
 if (CAFE.address) { $('#f-address').hidden = false; $('#f-address').textContent = '📍 ' + CAFE.address; }
 if (CAFE.instagram) {
@@ -444,18 +461,30 @@ function buildCatList(el) {
 }
 buildCatList($('#catlist-menu'));
 
-/* چیپ‌های دسته در ویو آیتم‌ها */
-function renderChips(activeId) {
-  const box = $('#chips');
-  box.innerHTML = '';
-  CATEGORIES.forEach(cat => {
-    const a = document.createElement('a');
-    a.className = 'chip' + (cat.id === activeId ? ' on' : '');
-    a.href = '#/cat/' + cat.id;
-    a.textContent = cat.icon + ' ' + cat.name;
-    box.appendChild(a);
+/* نوار پیشنهادهای ویژه در صفحه خوش‌آمد: آیتم‌های special + چند پرطرفدار */
+(function buildFeatured() {
+  const strip = $('#feat-strip');
+  if (!strip) return;
+  const picks = [];
+  CATEGORIES.forEach(cat => cat.items.forEach(it => {
+    if (it.badge === 'special') picks.push({ cat, it });
+  }));
+  [['hot', 3], ['ice', 1], ['cool', 1], ['shake', 3]].forEach(([cid, idx]) => {
+    const cat = CATEGORIES.find(c => c.id === cid);
+    if (cat && cat.items[idx] && !picks.some(p => p.it.name === cat.items[idx].name))
+      picks.push({ cat, it: cat.items[idx] });
   });
-}
+  picks.slice(0, 8).forEach(({ cat, it }) => {
+    const a = document.createElement('a');
+    a.className = 'feat';
+    a.href = '#/cat/' + cat.id;
+    a.innerHTML =
+      (it.imageUrl ? '<img src="' + it.imageUrl + '" alt="' + it.name + '" loading="lazy" onerror="this.remove()">' : '') +
+      '<div class="fb"><div class="fn">' + it.name + '</div>' +
+      '<div class="fp">' + fa(it.price) + ' هزار تومان</div></div>';
+    strip.appendChild(a);
+  });
+})();
 
 /* رندر آیتم‌های یک دسته */
 const itemsEl = $('#items');
@@ -465,7 +494,6 @@ function renderItems(id) {
   $('#items-name').textContent = cat.name;
   $('#items-count').textContent = fa(cat.items.length) + ' آیتم';
   document.title = cat.name + ' | ' + CAFE.name;
-  renderChips(cat.id);
   itemsEl.innerHTML = '';
   cat.items.forEach(it => itemsEl.appendChild(itemCard(cat, it, false)));
 }
