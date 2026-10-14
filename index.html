@@ -106,20 +106,24 @@
   .sec-head .rule{flex:1;height:1px;background:linear-gradient(-90deg,rgba(233,177,104,.4),transparent)}
 
   .card{
-    display:flex;align-items:center;gap:13px;
-    background:var(--card);border:1px solid var(--line);border-radius:17px;
-    padding:13px 15px;margin-bottom:10px;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
+    display:flex;align-items:center;gap:14px;
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:12px;margin-bottom:10px;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);
   }
   .card .info{flex:1;min-width:0}
   .card .nm{font-size:.98rem;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .card .ds{color:var(--muted);font-size:.8rem;margin-top:3px;line-height:1.8}
-  .card .pr{color:var(--accent);font-weight:700;font-size:.95rem;margin-top:7px}
-  .thumb{
-    width:66px;height:66px;border-radius:14px;flex-shrink:0;overflow:hidden;
-    background:rgba(255,255,255,.06);border:1px solid var(--line);
-    display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  .card .ds{
+    color:var(--muted);font-size:.78rem;margin-top:4px;line-height:1.9;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   }
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .card .pr{color:var(--accent);font-weight:700;font-size:.95rem;margin-top:7px}
+  .ph{
+    width:92px;height:92px;border-radius:16px;flex-shrink:0;overflow:hidden;position:relative;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:2rem;
+  }
+  .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .card.out .ph img{filter:grayscale(.7)}
 
   .bd{font-size:.67rem;padding:2.5px 9px;border-radius:999px;border:1px solid;font-weight:500}
   .bd.special{color:#f2c57e;border-color:rgba(242,197,126,.45);background:rgba(242,197,126,.12)}
@@ -213,8 +217,9 @@
    📌 راهنمای سریع:
    • price: قیمت به «هزار تومان» — مثلاً ۱۲۵ یعنی ۱۲۵ هزار تومان
    • badge: "" (هیچ) | "special" (پیشنهاد ویژه) | "new" (جدید) | "soldout" (ناتمام)
-   • desc: توضیح کوتاه آیتم — اگه نمی‌خوای خالی بذار ""
-   • برای دسته‌ی جدید، یکی از بلوک‌های { ... } رو کپی کن و تغییرش بده
+    • description: توضیح و ترکیبات آیتم — اگه نمی‌خوای خالی بذار ""
+    • imageUrl: آدرس عکس آیتم — اگه خالی باشه آیکون دسته نشون داده می‌شه
+    • برای دسته‌ی جدید، یکی از بلوک‌های { ... } رو کپی کن و تغییرش بده
    • ساعت کاری، شماره تلفن، آدرس و اینستاگرام رو که داشتی، همین بالا پر کن
      (هر کدوم خالی باشه، از منو حذف می‌شه)
 */
@@ -232,86 +237,86 @@ const CATEGORIES = [
   {
     id: "hot", icon: "☕", name: "نوشیدنی گرم",
     items: [
-      { name: "اسپرسو دوبل",    desc: "",                              price: 115, badge: "",        img: "" },
-      { name: "آمریکانو",       desc: "",                              price: 125, badge: "",        img: "" },
-      { name: "کاپوچینو",       desc: "",                              price: 120, badge: "",        img: "" },
-      { name: "لاته",           desc: "",                              price: 125, badge: "",        img: "" },
-      { name: "موکا",           desc: "",                              price: 225, badge: "",        img: "" },
-      { name: "کارامل ماکیاتو", desc: "اسپرسو، شیر و شیره‌ی کارامل",     price: 225, badge: "",        img: "" },
-      { name: "هات چاکلت",      desc: "",                              price: 200, badge: "",        img: "" },
-      { name: "چای ماسالا",     desc: "چای هندی با شیر و ادویه",        price: 200, badge: "",        img: "" },
+      { name: "اسپرسو دوبل", description: "شات غلیظ اسپرسو دوبل با کرمای طلایی و طعم قوی قهوه", price: 115, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:A%20cup%20of%20espresso.jpg?width=600" },
+      { name: "آمریکانو", description: "اسپرسو رقیق‌شده با آب داغ، سبک و معطر", price: 125, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:A%20cup%20of%20Americano.JPG?width=600" },
+      { name: "کاپوچینو", description: "اسپرسو با شیر بخارداده و کف شیر غلیظ با طرح لاته‌آرت", price: 120, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Cappuccino%20latte%20art%2020260712%20-%2002.jpg?width=600" },
+      { name: "لاته", description: "اسپرسو ملایم با شیر گرم فراوان و کف نرم شیری", price: 125, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Cafe%20Latte.jpg?width=600" },
+      { name: "موکا", description: "ترکیب اسپرسو، شکلات داغ و شیر با خامه", price: 225, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Caff%C3%A8%20Mocha%20by%20Phil.jpg?width=600" },
+      { name: "کارامل ماکیاتو", description: "لایه‌های اسپرسو و شیر تازه با شیره‌ی کارامل", price: 225, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Caramel%20Latte%20Macchiato.jpg?width=600" },
+      { name: "هات چاکلت", description: "شکلات داغ غلیظ با شیر و طعم عمیق کاکائو", price: 200, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Cup%20of%20Hot%20Chocolate.jpg?width=600" },
+      { name: "چای ماسالا", description: "چای هندی با شیر و ادویه", price: 200, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Chai%20latte%20-%20Cafe%20Coho%2C%20Queens%20Road%2C%20Brighton%202024-03-06.jpg?width=600" },
     ],
   },
   {
     id: "herbal", icon: "🫖", name: "دمنوش",
     items: [
-      { name: "دمنوش گل گاوزبان",   desc: "",                          price: 145, badge: "",        img: "" },
-      { name: "دمنوش آرام‌جان",     desc: "",                          price: 145, badge: "",        img: "" },
-      { name: "دمنوش به‌لیمو",      desc: "",                          price: 145, badge: "",        img: "" },
-      { name: "دمنوش سیب به دارچین", desc: "",                         price: 170, badge: "",        img: "" },
-      { name: "چای سبز",            desc: "",                          price: 170, badge: "",        img: "" },
-      { name: "چای مراکشی",         desc: "",                          price: 145, badge: "",        img: "" },
-      { name: "چای ترش",            desc: "",                          price: 185, badge: "",        img: "" },
-      { name: "چای سیاه",           desc: "",                          price: 75,  badge: "",        img: "" },
+      { name: "دمنوش گل گاوزبان", description: "دمنوش آرام‌بخش گل گاوزبان با طبع گرم", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Herbal%20Tea%2001.jpg?width=600" },
+      { name: "دمنوش آرام‌جان", description: "ترکیب گیاهان آرامش‌بخش برای رفع خستگی روز", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Herbal%20Tea%2002.jpg?width=600" },
+      { name: "دمنوش به‌لیمو", description: "دمنوش معطر به و لیمو با عطر دلنشین", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Herbal%20Tea%2003.jpg?width=600" },
+      { name: "دمنوش سیب به دارچین", description: "دمنوش سیب و به با چوب دارچین و عطر گرم", price: 170, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Apple-Cinnamon-Iced-Tea.jpg?width=600" },
+      { name: "چای سبز", description: "چای سبز تازه با آنتی‌اکسیدان فراوان و طعم ملایم", price: 170, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Cup%20of%20green%20tea%20and%20tea%20pot%20on%20table.jpg?width=600" },
+      { name: "چای مراکشی", description: "چای سبز با نعنای تازه به سبک مراکشی", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Mint%20tea%2C%20Marrakesh.jpg?width=600" },
+      { name: "چای ترش", description: "دمنوش گل هیبیسکوس با رنگ یاقوتی و طعم ترش", price: 185, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:A%20glass%20of%20hibiscus%20tea%2001.jpg?width=600" },
+      { name: "چای سیاه", description: "چای سیاه دم‌کرده با عطر قوی و رنگ شفاف", price: 75, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Frisch%20aufgebr%C3%BChter%20EarlGrey%20Tee.jpg?width=600" },
     ],
   },
   {
     id: "ice", icon: "🧊", name: "آیس کافی",
     items: [
-      { name: "آیس آمریکانو", desc: "",                               price: 145, badge: "",        img: "" },
-      { name: "آیس لاته",     desc: "",                               price: 205, badge: "",        img: "" },
-      { name: "آیس کارامل",   desc: "",                               price: 225, badge: "",        img: "" },
-      { name: "آیس موکا",     desc: "",                               price: 225, badge: "",        img: "" },
-      { name: "آفوگاتو",      desc: "بستنی وانیل با شات اسپرسو داغ",   price: 190, badge: "",        img: "" },
+      { name: "آیس آمریکانو", description: "اسپرسو سرد روی یخ، خنک و پرکافئین", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Ice%20coffee%20image.jpg?width=600" },
+      { name: "آیس لاته", description: "اسپرسو سرد با شیر تازه و یخ فراوان", price: 205, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:A%20glass%20of%20Ipoh%20iced%20white%20coffee.jpg?width=600" },
+      { name: "آیس کارامل", description: "قهوه سرد با شیره‌ی کارامل، شیر و بستنی وانیلی", price: 225, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Caf%C3%A9%20frapp%C3%A9%20with%20vanilla%20ice%20cream%20in%20Chania%20%28Crete%2C%20Greece%29.jpg?width=600" },
+      { name: "آیس موکا", description: "قهوه سرد با شکلات و شیر، خنک و شیرین", price: 225, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Iced%20White%20Mocha%20in%20a%20Glass%20Jug.jpg?width=600" },
+      { name: "آفوگاتو", description: "بستنی وانیل با شات اسپرسو داغ", price: 190, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Affogato%20al%20Caffe.jpg?width=600" },
     ],
   },
   {
     id: "cool", icon: "🍹", name: "خنک بنوش",
     items: [
-      { name: "لیموناد",         desc: "",                             price: 180, badge: "",        img: "" },
-      { name: "موهیتو",          desc: "نعنا، لیموترش و سودا",          price: 190, badge: "",        img: "" },
-      { name: "پیناکولادا",      desc: "آناناس، نارگیل و خامه",         price: 245, badge: "",        img: "" },
-      { name: "آمازون",          desc: "",                             price: 205, badge: "",        img: "" },
-      { name: "اسموتی هندوانه",  desc: "",                             price: 145, badge: "",        img: "" },
-      { name: "اسموتی طالبی",    desc: "",                             price: 175, badge: "",        img: "" },
-      { name: "شربت بیدمشک",     desc: "",                             price: 145, badge: "",        img: "" },
-      { name: "شربت زعفران",     desc: "",                             price: 180, badge: "",        img: "" },
-      { name: "شربت نعنا",       desc: "",                             price: 145, badge: "",        img: "" },
-      { name: "شربت بهارنارنج",  desc: "",                             price: 145, badge: "",        img: "" },
+      { name: "لیموناد", description: "آب لیموی تازه با یخ و برگ نعنا، ترش و خنک", price: 180, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:A%20glass%20of%20lemonade.jpg?width=600" },
+      { name: "موهیتو", description: "نعنا، لیموترش و سودا", price: 190, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Cocktail%20Mojito.jpg?width=600" },
+      { name: "پیناکولادا", description: "آناناس، نارگیل و خامه", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Delicious%20Pina%20Colada%20%282940555299%29.jpg?width=600" },
+      { name: "آمازون", description: "آب پشن‌فروت تازه با طعم استوایی ترش و شیرین", price: 205, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Passion%20Fruit%20juice.jpg?width=600" },
+      { name: "اسموتی هندوانه", description: "هندوانه تازه میکس‌شده با یخ", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Watermelon%20Juice.jpg?width=600" },
+      { name: "اسموتی طالبی", description: "طالبی رسیده میکس‌شده با شیر و یخ", price: 175, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Muskmelon%20juice.jpg?width=600" },
+      { name: "شربت بیدمشک", description: "شربت سنتی بیدمشک با عرق گیاهی و یخ", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Sekanjebin%20%28drink%29.jpg?width=600" },
+      { name: "شربت زعفران", description: "شربت زعفران اعلا با گلاب و یخ", price: 180, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Kesaria%20Doodh%28Saffron%20Milk%29-Varanasi-UttarPradesh-DSC001.jpg?width=600" },
+      { name: "شربت نعنا", description: "شربت نعنای تازه با لیمو و یخ", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Mint%20lemonade%20in%20summer.jpg?width=600" },
+      { name: "شربت بهارنارنج", description: "شربت بهارنارنج معطر با عرق گیاهی و یخ", price: 145, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Kahoo%20sekanjebin.jpg?width=600" },
     ],
   },
   {
     id: "shake", icon: "🥤", name: "شیک",
     items: [
-      { name: "شیک وانیل",       desc: "",                             price: 245, badge: "",        img: "" },
-      { name: "شیک شکلات",       desc: "",                             price: 245, badge: "",        img: "" },
-      { name: "شیک توت‌فرنگی",   desc: "",                             price: 245, badge: "",        img: "" },
-      { name: "شیک نوتلا",       desc: "",                             price: 300, badge: "",        img: "" },
-      { name: "شیک اسپرسو",      desc: "",                             price: 300, badge: "",        img: "" },
-      { name: "شیک بادام‌زمینی", desc: "",                             price: 300, badge: "",        img: "" },
+      { name: "شیک وانیل", description: "بستنی وانیلی با شیر سرد و خامه", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Carl%27s%20Jr%20Vanilla%20Milkshake%20%2829055809008%29.jpg?width=600" },
+      { name: "شیک شکلات", description: "بستنی شکلاتی با سس شکلات و خامه", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Chocolate%20Milkshake%20%2851513436940%29.jpg?width=600" },
+      { name: "شیک توت‌فرنگی", description: "توت‌فرنگی تازه با بستنی و خامه", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Strawberry%20Milkshake%20Whipped%20Cream.jpg?width=600" },
+      { name: "شیک نوتلا", description: "نوتلا اصل، بستنی وانیلی، فندق خردشده و شیر", price: 300, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Chocolate%20Milkshake%20%2852354323549%29.jpg?width=600" },
+      { name: "شیک اسپرسو", description: "شات اسپرسو با بستنی وانیلی و شیر سرد", price: 300, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Espresso%20Coffee%20Milkshake.jpg?width=600" },
+      { name: "شیک بادام‌زمینی", description: "کره‌ی بادام‌زمینی با بستنی وانیلی و شیر", price: 300, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Peanut%20Butter%20milk%20shake.jpg?width=600" },
     ],
   },
   {
     id: "food", icon: "🍽️", name: "غذا",
     items: [
-      { name: "سیب‌زمینی ساده",  desc: "",                             price: 215, badge: "",        img: "" },
-      { name: "سیب آلفردو",      desc: "",                             price: 385, badge: "",        img: "" },
-      { name: "سیب ویژه",        desc: "",                             price: 530, badge: "special", img: "" },
-      { name: "سالاد سزار",      desc: "",                             price: 460, badge: "",        img: "" },
-      { name: "پاستا آلفردو",    desc: "",                             price: 490, badge: "",        img: "" },
-      { name: "پاستا پستو",      desc: "",                             price: 575, badge: "",        img: "" },
-      { name: "برگر ویژه رترو",  desc: "",                             price: 590, badge: "special", img: "" },
-      { name: "پنیری مرغ گریل",  desc: "",                             price: 545, badge: "",        img: "" },
-      { name: "پنیری مرغ پستو",  desc: "",                             price: 580, badge: "",        img: "" },
+      { name: "سیب‌زمینی ساده", description: "سیب‌زمینی سرخ‌شده ترد با نمک", price: 215, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:French%20fries%203.jpg?width=600" },
+      { name: "سیب آلفردو", description: "سیب‌زمینی با سس آلفردو و پنیر آب‌شده", price: 385, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:LoadedCheeseFries%20C2Cafe%20Mumbai.jpg?width=600" },
+      { name: "سیب ویژه", description: "سیب‌زمینی ویژه با سس مخصوص، پنیر و مخلفات", price: 530, badge: "special", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Pub%20food%20for%20the%20Win%20%28Unsplash%29.jpg?width=600" },
+      { name: "سالاد سزار", description: "کاهو، مرغ گریل، نان تست و سس سزار با پنیر پارمزان", price: 460, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Caesar-salad.jpg?width=600" },
+      { name: "پاستا آلفردو", description: "فتوچینی با سس خامه‌ای آلفردو، قارچ و مرغ", price: 490, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Fettruccine%20Alfredo.jpg?width=600" },
+      { name: "پاستا پستو", description: "پاستا با سس ریحان پستو و پنیر پارمزان", price: 575, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Pasta%20al%20pesto%20fatto%20in%20casa.jpg?width=600" },
+      { name: "برگر ویژه رترو", description: "برگر گوشت مخصوص با پنیر، سس دودی و سیب‌زمینی", price: 590, badge: "special", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:BBQ%20Bacon%20Cheeseburger%20at%20Planet%20Dailies.jpg?width=600" },
+      { name: "پنیری مرغ گریل", description: "ساندویچ مرغ گریل با پنیر آب‌شده", price: 545, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Grilled%20Chicken%20Sandwich.jpg?width=600" },
+      { name: "پنیری مرغ پستو", description: "ساندویچ مرغ با سس پستو و پنیر آب‌شده", price: 580, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Barbecue%20chicken%20sandwich-01.jpg?width=600" },
     ],
   },
   {
     id: "hookah", icon: "💨", name: "قلیان",
     items: [
-      { name: "قلیان دو سیب",        desc: "",                         price: 245, badge: "",        img: "" },
-      { name: "قلیان لاو",           desc: "",                         price: 245, badge: "",        img: "" },
-      { name: "قلیان مسکو",          desc: "",                         price: 245, badge: "",        img: "" },
-      { name: "قلیان آدامس دارچین",  desc: "",                         price: 345, badge: "",        img: "" },
+      { name: "قلیان دو سیب", description: "تنباکوی دو سیب سنتی با دود غلیظ", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Hookah%20Shisha.jpg?width=600" },
+      { name: "قلیان لاو", description: "تنباکوی لاو با طعم شیرین میوه‌ای", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Hookah%20Lounge.jpg?width=600" },
+      { name: "قلیان مسکو", description: "تنباکوی مسکو با طعم خنک و تازه", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Hookah%20Pipes%20at%20a%20Hookah%20lounge%20by%20Don%20Ramey%20Logan.jpg?width=600" },
+      { name: "قلیان آدامس دارچین", description: "تنباکوی آدامس دارچین با طعم شیرین و تند", price: 345, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Flickr%20-%20DavidDennisPhotos.com%20-%20Hookah-Shisha%20Pipes.jpg?width=600" },
     ],
   },
 ];
@@ -379,14 +384,14 @@ CATEGORIES.forEach((cat, i) => {
     const card = document.createElement('article');
     card.className = 'card' + (it.badge === 'soldout' ? ' out' : '');
     card.innerHTML =
+      '<div class="ph">' + cat.icon +
+        (it.imageUrl ? '<img src="' + it.imageUrl + '" alt="' + it.name + '" loading="lazy" onerror="this.remove()">' : '') +
+      '</div>' +
       '<div class="info">' +
         '<div class="nm">' + it.name + (b ? ' <span class="bd ' + b.cls + '">' + b.txt + '</span>' : '') + '</div>' +
-        (it.desc ? '<div class="ds">' + it.desc + '</div>' : '') +
+        (it.description ? '<div class="ds">' + it.description + '</div>' : '') +
         '<div class="pr">' + priceTxt(it.price) + '</div>' +
-      '</div>' +
-      (it.img
-        ? '<div class="thumb"><img src="' + it.img + '" alt="' + it.name + '" loading="lazy" onerror="this.parentNode.textContent=\'' + cat.icon + '\'"></div>'
-        : '<div class="thumb">' + cat.icon + '</div>');
+      '</div>';
     sec.appendChild(card);
   });
   menuEl.appendChild(sec);
@@ -457,7 +462,7 @@ q.addEventListener('input', () => {
   resEl.hidden = false;
   const hits = [];
   CATEGORIES.forEach(cat => cat.items.forEach(it => {
-    if (norm(it.name + ' ' + (it.desc || '')).includes(query))
+    if (norm(it.name + ' ' + (it.description || '')).includes(query))
       hits.push({ cat, it });
   }));
   const title = document.createElement('p');
@@ -475,15 +480,17 @@ q.addEventListener('input', () => {
     const card = document.createElement('article');
     card.className = 'card' + (it.badge === 'soldout' ? ' out' : '');
     card.innerHTML =
+      '<div class="ph">' + cat.icon +
+        (it.imageUrl ? '<img src="' + it.imageUrl + '" alt="' + it.name + '" loading="lazy" onerror="this.remove()">' : '') +
+      '</div>' +
       '<div class="info">' +
         '<div class="nm">' + it.name +
           (b ? ' <span class="bd ' + b.cls + '">' + b.txt + '</span>' : '') +
           ' <span style="color:var(--muted);font-size:.72rem;font-weight:400">' + cat.icon + ' ' + cat.name + '</span>' +
         '</div>' +
-        (it.desc ? '<div class="ds">' + it.desc + '</div>' : '') +
+        (it.description ? '<div class="ds">' + it.description + '</div>' : '') +
         '<div class="pr">' + priceTxt(it.price) + '</div>' +
-      '</div>' +
-      '<div class="thumb">' + cat.icon + '</div>';
+      '</div>';
     resEl.appendChild(card);
   });
 });
