@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <!--
-  ┌─────────────────────────────────────────────────────────┐
-  │        منوی دیجیتال کافه رترو  —  نسخه‌ی موبایل          │
-  │                                                         │
-  │   برای ویرایش منو، به بخش «داده‌های منو» پایین‌تر برو.   │
-  │   (همین جا در گیت‌هاب قابل ویرایشه — README را ببین)     │
-  └─────────────────────────────────────────────────────────┘
+  ┌─────────────────────────────────────────────────────────────┐
+  │        منوی دیجیتال کافه رترو  —  نسخه‌ی موبایل (QR)         │
+  │                                                             │
+  │  برای ویرایش منو (قیمت، آیتم، اسم کافه…) برو به بخش          │
+  │  «⚙️ داده‌های منو» در پایین همین فایل.                        │
+  │  راهنمای کامل: فایل README.md                                │
+  └─────────────────────────────────────────────────────────────┘
 -->
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#D63A2F">
-<meta name="description" content="منوی دیجیتال کافه رترو">
+<meta name="color-scheme" content="light">
+<meta name="description" content="منوی دیجیتال کافه رترو — نوشیدنی گرم، دمنوش، آیس کافی، شیک، غذا و قلیان">
 <meta property="og:title" content="کافه رترو | منو">
+<meta property="og:description" content="منوی دیجیتال کافه رترو">
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -25,190 +28,309 @@
   @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
   @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
 
+  /* ═══ سیستم رنگ رترو: کرم / قهوه‌ای چوب / قرمز / طلایی ═══ */
   :root{
-    /* سیستم رنگ «رترو»: ۶۰/۳۰/۱۰ — کرم / قرمز / زرد */
-    --bg:#FFF9F0;
+    --bg:#FFF8EE;
     --surface:#FFFFFF;
-    --ink:#231A12;
-    --ink-soft:#5C4B3A;
-    --muted:#A68E76;
+    --ink:#2A1D13;
+    --ink-soft:#6B5745;
+    --muted:#A08A73;
     --accent:#D63A2F;
-    --accent-deep:#B3281F;
-    --accent-soft:#FDE9E4;
+    --accent-deep:#9E2E1F;
+    --accent-soft:#FDEAE5;
     --gold:#FFB627;
-    --gold-soft:#FFF3D9;
-    --line:#F0E4D2;
-    --shadow:0 10px 28px rgba(120,70,40,.10);
-    --shadow-sm:0 4px 14px rgba(120,70,40,.08);
+    --gold-deep:#B87A16;
+    --gold-soft:#FFF4DC;
+    --green:#2F7A3D;
+    --green-soft:#E9F4EA;
+    --line:#F0E3D1;
+    --wood:#8A5A2B;
+    --shadow:0 10px 30px rgba(120,70,40,.10);
+    --shadow-sm:0 3px 12px rgba(120,70,40,.08);
+    --r-lg:22px; --r-md:16px; --r-sm:12px;
+    --head-h:104px;               /* ارتفاع هدر چسبان — با JS به‌روز می‌شه */
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   [hidden]{display:none!important}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
     font-family:'Vazirmatn','Segoe UI',Tahoma,sans-serif;
     background:var(--bg);color:var(--ink);
-    min-height:100vh;
-    padding-bottom:calc(30px + env(safe-area-inset-bottom));
-    overflow-x:hidden;
+    min-height:100vh;overflow-x:hidden;
+    padding-bottom:env(safe-area-inset-bottom);
+    line-height:1.6;
   }
+  img{display:block;max-width:100%}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
 
-  /* ── اسپلش ── */
-  .view-full{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:linear-gradient(160deg,#E04A2F,#B3281F);color:#fff;text-align:center;padding:24px;cursor:pointer}
-  .splash-logo{width:126px;height:126px;border-radius:50%;
+  /* ─────────── اسپلش (خوش‌آمد اول) ─────────── */
+  .splash{
+    min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,#E04A2F,#B3281F);color:#fff;text-align:center;
+    padding:24px calc(24px + env(safe-area-inset-right)) 24px calc(24px + env(safe-area-inset-left));
+  }
+  .logo-badge{
+    width:118px;height:118px;border-radius:50%;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
-    background:var(--gold);border:6px solid rgba(255,255,255,.92);
-    box-shadow:0 18px 44px rgba(0,0,0,.28);margin-bottom:24px;
-    animation:pop .5s cubic-bezier(.2,.9,.3,1.2)}
-  .splash-logo svg{width:64%;height:64%;display:block}
-  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
-  .view-full h1{font-size:2.3rem;font-weight:800}
-  .latin-splash{font-family:Georgia,'Times New Roman',serif;font-size:.85rem;letter-spacing:.42em;text-indent:.42em;opacity:.92;margin-top:10px}
+    background:var(--gold);border:5px solid rgba(255,255,255,.94);
+    box-shadow:0 18px 44px rgba(0,0,0,.28);
+    animation:pop .5s cubic-bezier(.2,.9,.3,1.2)
+  }
+  .logo-badge svg{width:66%;height:66%}
+  @keyframes pop{from{transform:scale(.62);opacity:0}to{transform:scale(1);opacity:1}}
+  .splash h1{font-size:2.15rem;font-weight:800;margin-top:22px;letter-spacing:-.5px}
+  .splash .latin{font-family:Georgia,'Times New Roman',serif;font-size:.8rem;letter-spacing:.42em;text-indent:.42em;opacity:.92;margin-top:8px}
+  .splash .skip{margin-top:34px;font-size:.8rem;opacity:.85;border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:8px 20px}
+  .dots{display:flex;gap:6px;margin-top:22px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);animation:bl 1.2s infinite}
+  .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+  @keyframes bl{0%,60%,100%{opacity:.35}30%{opacity:1}}
 
-  /* ── خوش‌آمد: بک‌گراند سان‌برست رترو ── */
+  /* ─────────── سربرگ مشترک صفحه‌ی خوش‌آمد ─────────── */
+  .page{min-height:100dvh;display:flex;flex-direction:column}
   .welcome-hero{
-    position:relative;overflow:hidden;flex-shrink:0;
-    padding:84px 24px 70px;text-align:center;
+    position:relative;overflow:hidden;text-align:center;flex-shrink:0;
+    padding:calc(56px + env(safe-area-inset-top)) 24px 42px;
     background:
-      radial-gradient(85% 60% at 50% 115%, rgba(255,182,39,.22), rgba(255,182,39,0) 70%),
-      repeating-conic-gradient(from 0deg at 50% -35%, rgba(214,58,47,.06) 0deg 10deg, rgba(214,58,47,0) 10deg 20deg),
+      radial-gradient(90% 62% at 50% 118%, rgba(255,182,39,.26), rgba(255,182,39,0) 72%),
+      repeating-conic-gradient(from 0deg at 50% -35%, rgba(214,58,47,.07) 0deg 10deg, rgba(214,58,47,0) 10deg 20deg),
       var(--bg);
   }
-  .welcome-txt{text-align:center;padding:4px 24px 0}
-  .welcome-txt h2{font-size:1.55rem;font-weight:800}
-  .welcome-txt h2 .hl{color:var(--accent-deep)}
-  .welcome-txt p{color:var(--muted);font-size:.92rem;margin-top:10px}
-
-  /* ── خوش‌آمد: دکمه‌ی چسبان پایین صفحه ── */
-  #view-home{min-height:100dvh;display:flex;flex-direction:column}
-  .bottom-cta{
-    margin-top:auto;position:sticky;bottom:0;z-index:40;
-    padding:20px 24px calc(22px + env(safe-area-inset-bottom));
-    background:linear-gradient(180deg,rgba(255,249,240,0),var(--bg) 55%);
+  .welcome-hero .logo-badge{width:96px;height:96px;border-width:4px;margin:0 auto;box-shadow:0 12px 30px rgba(214,58,47,.28)}
+  .welcome-hero.has-img{
+    background-image:linear-gradient(180deg,rgba(26,14,7,.66),rgba(26,14,7,.78)),var(--hero);
+    background-size:cover;background-position:center;
   }
+  .welcome-hero.has-img h1,.welcome-hero.has-img .tagline{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+  .welcome-hero.has-img .tagline{opacity:.94}
+  .welcome-hero h1{font-size:1.85rem;font-weight:800;margin-top:18px}
+  .welcome-hero .tagline{color:var(--ink-soft);font-size:.95rem;margin-top:6px}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--surface);border:1px solid var(--line);border-radius:999px;
+    padding:7px 14px;font-size:.78rem;color:var(--ink-soft);box-shadow:var(--shadow-sm)
+  }
+  .pill.open{color:var(--green);border-color:#CBE6CF;background:var(--green-soft)}
+  .pill.closed{color:#B04444;border-color:#EFC9C9;background:#FAEDED}
+  .pill b{font-weight:700}
+
+  .welcome-body{flex:1;width:100%;max-width:600px;margin:0 auto;padding:0 18px calc(28px + env(safe-area-inset-bottom))}
+  .lead{font-size:1.05rem;font-weight:800;text-align:center;margin:2px 0 16px}
+  .lead span{color:var(--accent-deep)}
+  .catgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (min-width:520px){.catgrid{grid-template-columns:1fr 1fr 1fr}}
+  .catcard{
+    position:relative;overflow:hidden;text-decoration:none;
+    background:var(--surface);border:1px solid rgba(42,29,19,.06);border-radius:var(--r-lg);
+    padding:14px 12px 13px;box-shadow:var(--shadow-sm);text-align:center;
+    transition:transform .16s ease, box-shadow .16s ease;
+  }
+  .catcard:active{transform:scale(.97)}
+  .catcard .ic{
+    width:52px;height:52px;margin:0 auto 9px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+    background:var(--gold-soft);border:1px solid #F5E4C2;overflow:hidden;position:relative
+  }
+  .catcard .ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .catcard .nm{font-weight:700;font-size:.92rem;line-height:1.45}
+  .catcard .ct{color:var(--muted);font-size:.72rem;margin-top:3px}
   .cta{
-    display:block;max-width:340px;margin:0 auto;text-decoration:none;text-align:center;
+    display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;text-align:center;
     background:linear-gradient(135deg,#E04A2F,#C0301F);color:#fff;
-    font-weight:700;font-size:1.05rem;padding:16px 20px;border-radius:999px;
-    box-shadow:0 10px 26px rgba(214,58,47,.42);
+    font-weight:700;font-size:1.02rem;padding:16px 22px;border-radius:999px;margin-top:18px;
+    box-shadow:0 10px 26px rgba(214,58,47,.38);
   }
-  .cta:active{transform:scale(.98)}
+  .cta:active{transform:scale(.985)}
 
-  /* ── توپ‌بار ── */
+  /* ─────────── فوتر ─────────── */
+  footer{max-width:600px;margin:34px auto 0;padding:0 18px;text-align:center;width:100%}
+  .fcard{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    box-shadow:var(--shadow-sm);padding:6px 14px;text-align:right;overflow:hidden
+  }
+  .frow{
+    display:flex;align-items:center;gap:12px;padding:13px 2px;
+    text-decoration:none;font-size:.9rem;border-bottom:1px solid var(--line)
+  }
+  .frow:last-child{border-bottom:0}
+  .frow .fi{
+    width:38px;height:38px;flex-shrink:0;border-radius:12px;background:var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;font-size:1.05rem
+  }
+  .frow .fb{min-width:0;flex:1}
+  .frow .fl{display:block;color:var(--muted);font-size:.7rem;line-height:1.7}
+  .frow .fv{font-weight:500;color:var(--ink);word-break:break-word}
+  .frow.tap{background:linear-gradient(135deg,#E04A2F,#C0301F);border-radius:var(--r-md);padding:12px 16px;margin:10px 0;border-bottom:0;color:#fff;justify-content:center;font-weight:700;box-shadow:0 8px 20px rgba(214,58,47,.32)}
+  .frow.tap .fi{background:rgba(255,255,255,.2)}
+  .credit{margin:20px 0 0;font-size:.72rem;color:#BFAF9B;line-height:2}
+
+  /* ─────────── هدر چسبان منو ─────────── */
   .topbar{
-    position:sticky;top:0;z-index:50;
-    background:rgba(255,249,240,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    position:sticky;top:0;z-index:60;
+    background:rgba(255,248,238,.94);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top);
   }
-  .topbar-in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:12px 14px}
-  .back{
-    width:38px;height:38px;flex-shrink:0;border-radius:12px;text-decoration:none;
-    display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--ink);
-    background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-sm);
+  .tb-row{display:flex;align-items:center;gap:10px;max-width:720px;margin:0 auto;padding:10px 14px 8px}
+  .icon-btn{
+    width:42px;height:42px;flex-shrink:0;border-radius:14px;text-decoration:none;
+    display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+    background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-sm)
   }
-  .topbar-title{flex:1;font-weight:800;font-size:1rem;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .count{color:var(--muted);font-size:.75rem;white-space:nowrap}
-  .search{position:relative;margin:14px 0 2px}
+  .search{position:relative;flex:1;min-width:0}
   .search input{
-    width:100%;padding:12px 44px 12px 16px;border-radius:14px;
+    width:100%;padding:11px 42px 11px 40px;border-radius:14px;
     background:var(--surface);border:1px solid var(--line);
-    color:var(--ink);font:inherit;font-size:.9rem;outline:none;box-shadow:var(--shadow-sm);
+    color:var(--ink);font:inherit;font-size:.9rem;outline:none;box-shadow:var(--shadow-sm)
   }
   .search input::placeholder{color:#B9A88F}
-  .search input:focus{border-color:var(--accent)}
-  .search .ic{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:.95rem;pointer-events:none;opacity:.65}
+  .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(214,58,47,.12)}
+  .search .ic{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:.92rem;pointer-events:none;opacity:.6}
+  .search .clr{
+    position:absolute;left:8px;top:50%;transform:translateY(-50%);
+    width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--wood);
+    font-size:.8rem;display:flex;align-items:center;justify-content:center
+  }
+  /* نوار دسته‌ها (چیپ) */
+  .chips{
+    display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    padding:2px 14px 11px;max-width:720px;margin:0 auto;
+    scroll-snap-type:x proximity;
+  }
+  .chips::-webkit-scrollbar{display:none}
+  .chip{
+    flex:0 0 auto;scroll-snap-align:center;text-decoration:none;white-space:nowrap;
+    border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+    border-radius:999px;padding:8px 15px;font-size:.82rem;font-weight:500;
+    box-shadow:var(--shadow-sm);transition:background .15s,color .15s,border-color .15s
+  }
+  .chip[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;box-shadow:0 6px 16px rgba(214,58,47,.32)}
 
-  /* ── لیست دسته‌ها ── */
-  .catlist{margin:16px 0 6px}
-  .catrow{
-    display:flex;align-items:center;gap:14px;
-    background:var(--surface);border:1px solid rgba(36,26,16,.05);border-radius:18px;
-    padding:12px 14px;margin-bottom:10px;text-decoration:none;color:var(--ink);
-    box-shadow:var(--shadow-sm);
+  /* ─────────── بدنه‌ی منو ─────────── */
+  .menu-wrap{max-width:720px;margin:0 auto;padding:0 16px}
+  .menu-hero{
+    margin:16px 0 6px;border-radius:var(--r-lg);overflow:hidden;position:relative;
+    background:linear-gradient(135deg,#2F2016,#5A3A22);color:#fff;
+    padding:20px 18px;box-shadow:var(--shadow)
   }
-  .catrow:active{transform:scale(.99)}
-  .catrow .th{
-    width:62px;height:62px;border-radius:15px;flex-shrink:0;overflow:hidden;position:relative;
-    background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  .menu-hero::after{
+    content:'';position:absolute;inset:0;opacity:.5;
+    background:repeating-conic-gradient(from 0deg at 108% -20%, rgba(255,182,39,.16) 0deg 9deg, rgba(255,182,39,0) 9deg 18deg)
   }
-  .catrow .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-  .catrow .nm{font-weight:700;font-size:1rem}
-  .catrow .ct{color:var(--muted);font-size:.75rem;margin-top:3px}
-  .catrow .go{
-    margin-inline-start:auto;flex-shrink:0;width:32px;height:32px;border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    background:var(--gold);color:#231A12;font-size:1.05rem;font-weight:700;
+  .menu-hero>div{position:relative;z-index:1;display:flex;align-items:center;gap:14px}
+  .menu-hero h1{font-size:1.25rem;font-weight:800}
+  .menu-hero p{font-size:.78rem;opacity:.85;margin-top:3px}
+  .menu-hero.has-img{
+    background-image:linear-gradient(120deg,rgba(26,14,7,.88),rgba(26,14,7,.52)),var(--hero);
+    background-size:cover;background-position:center;
   }
+  .menu-hero.has-img::after{display:none}
+  .menu-hero .logo-badge{width:56px;height:56px;border-width:3px;box-shadow:none;animation:none}
+  .menu-hero .logo-badge svg{width:64%;height:64%}
 
-  /* ── بدنه ── */
-  .view{max-width:560px;margin:0 auto;padding:4px 16px}
-  @keyframes inFwd{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
-  @keyframes inBack{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
-  .view.enter-fwd{animation:inFwd .26s cubic-bezier(.22,.8,.3,1)}
-  .view.enter-back{animation:inBack .26s cubic-bezier(.22,.8,.3,1)}
-  main{max-width:560px;margin:0 auto;padding:4px 0}
-  #items{margin-top:10px}
-  section{margin-top:26px}
-  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-  .sec-head .ico{font-size:1.2rem}
-  .sec-head h2{font-size:1.1rem;font-weight:800;white-space:nowrap}
-  .sec-head .rule{flex:1;height:1px;background:var(--line)}
+  /* پیشنهاد ویژه */
+  .specials{margin-top:22px}
+  .spec-head{display:flex;align-items:baseline;gap:8px;margin-bottom:12px;padding:0 2px}
+  .spec-head h2{font-size:1.02rem;font-weight:800}
+  .spec-head span{color:var(--muted);font-size:.74rem}
+  .spec-strip{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 8px;scroll-snap-type:x mandatory}
+  .spec-strip::-webkit-scrollbar{display:none}
+  .spec{
+    flex:0 0 46%;max-width:190px;scroll-snap-align:start;position:relative;
+    background:var(--surface);border:1px solid rgba(42,29,19,.06);border-radius:var(--r-md);
+    overflow:hidden;box-shadow:var(--shadow-sm);text-decoration:none
+  }
+  @media (min-width:560px){.spec{flex-basis:32%}}
+  .spec .im{aspect-ratio:4/3;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:1.8rem;overflow:hidden;position:relative}
+  .spec .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .spec .bdg{
+    position:absolute;top:8px;right:8px;z-index:2;
+    background:var(--gold);color:#3A2408;font-size:.64rem;font-weight:800;
+    border-radius:999px;padding:3px 9px;box-shadow:0 3px 10px rgba(0,0,0,.18)
+  }
+  .spec .tx{padding:10px 11px 12px}
+  .spec .nm{font-size:.85rem;font-weight:700;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
+  .spec .pr{margin-top:7px;font-size:.85rem;font-weight:800;color:var(--accent-deep)}
+
+  /* دسته و آیتم‌ها */
+  .cat{margin-top:30px;scroll-margin-top:calc(var(--head-h) + 10px)}
+  .cat-head{display:flex;align-items:center;gap:10px;margin-bottom:13px;padding:0 2px}
+  .cat-head .ico{
+    width:38px;height:38px;flex-shrink:0;border-radius:12px;background:var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:1px solid #F5E4C2
+  }
+  .cat-head h2{font-size:1.06rem;font-weight:800}
+  .cat-head .ct{color:var(--muted);font-size:.73rem;font-weight:400;margin-inline-start:2px}
+  .cat-head .rule{flex:1;height:1px;background:var(--line)}
 
   .card{
-    display:flex;align-items:center;gap:14px;
-    background:var(--surface);border:1px solid rgba(36,26,16,.05);border-radius:20px;
-    padding:14px;margin-bottom:12px;box-shadow:var(--shadow-sm);
+    display:flex;align-items:stretch;gap:13px;
+    background:var(--surface);border:1px solid rgba(42,29,19,.055);border-radius:var(--r-lg);
+    padding:12px;margin-bottom:11px;box-shadow:var(--shadow-sm)
   }
-  .card .info{flex:1;min-width:0}
-  .card .nm{font-size:.98rem;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .card .ph{
+    width:92px;height:92px;border-radius:var(--r-md);flex-shrink:0;overflow:hidden;position:relative;
+    background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:1.9rem
+  }
+  .card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .card .info{flex:1;min-width:0;display:flex;flex-direction:column}
+  .card .nm{font-size:.97rem;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap;line-height:1.5}
   .card .ds{
-    color:var(--muted);font-size:.78rem;margin-top:5px;line-height:1.9;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    color:var(--muted);font-size:.77rem;margin-top:3px;line-height:1.85;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden
   }
-  .card .pr{margin-top:8px;font-size:.98rem;font-weight:800;color:var(--accent-deep)}
+  .card .pr{margin-top:auto;padding-top:6px;font-size:.98rem;font-weight:800;color:var(--accent-deep);white-space:nowrap}
   .card .pr small{font-weight:500;color:var(--muted);font-size:.72rem}
-  .ph{
-    width:92px;height:92px;border-radius:16px;flex-shrink:0;overflow:hidden;position:relative;
-    background:var(--gold-soft);
-    display:flex;align-items:center;justify-content:center;font-size:2rem;
-  }
-  .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-  .card.out .ph img{filter:grayscale(.7)}
-
-  .bd{font-size:.67rem;padding:3px 10px;border-radius:999px;border:1px solid;font-weight:700}
+  .card .cat-tag{color:var(--muted);font-size:.7rem;font-weight:400}
+  .bd{font-size:.66rem;padding:2.5px 9px;border-radius:999px;border:1px solid;font-weight:700;white-space:nowrap}
   .bd.special{color:#9A5A1E;border-color:#EBD3AC;background:#F9EFD9}
   .bd.new{color:#2F7A3D;border-color:#BFE0C4;background:#E9F4EA}
+  .bd.popular{color:#9E2E1F;border-color:#F3C4BB;background:var(--accent-soft)}
   .bd.soldout{color:#B04444;border-color:#EFC9C9;background:#FAEDED}
   .card.out{opacity:.55}
   .card.out .pr{text-decoration:line-through;text-decoration-color:rgba(176,68,68,.55)}
-
-  /* ── جستجو ── */
-  #results{margin-top:22px}
-  .res-title{color:var(--muted);font-size:.85rem;margin-bottom:14px;text-align:center}
-  .res-title b{color:var(--accent-deep)}
-  .empty{text-align:center;color:var(--muted);padding:46px 0;font-size:.9rem}
-  .empty .big{font-size:2.2rem;display:block;margin-bottom:10px}
-  body.searching #catlist-menu{display:none}
-
-  /* ── فوتر ── */
-  footer{max-width:560px;margin:48px auto 0;padding:0 20px;text-align:center}
-  footer .rule{height:1px;background:var(--line);margin-bottom:24px}
-  .tel{
-    display:inline-flex;align-items:center;gap:9px;text-decoration:none;
-    background:linear-gradient(135deg,#E04A2F,#C0301F);color:#fff;
-    font-weight:700;font-size:.95rem;padding:13px 32px;border-radius:999px;
-    box-shadow:0 8px 22px rgba(214,58,47,.38);
+  .card.out .ph img{filter:grayscale(.75)}
+  @media (min-width:640px){
+    .items{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    .card{margin-bottom:0}
   }
-  .frow{color:var(--muted);font-size:.85rem;line-height:2.3;margin-top:12px}
-  .frow a{color:var(--accent-deep);text-decoration:none;font-weight:700}
-  .credit{margin-top:24px;font-size:.75rem;color:#B9A88F}
+
+  /* نتایج جستجو */
+  #results{margin-top:14px}
+  .res-title{color:var(--muted);font-size:.84rem;margin-bottom:13px;text-align:center}
+  .res-title b{color:var(--accent-deep)}
+  .empty{text-align:center;color:var(--muted);padding:52px 0;font-size:.9rem}
+  .empty .big{font-size:2.2rem;display:block;margin-bottom:10px}
+  .empty .sug{color:var(--accent-deep);font-weight:700;text-decoration:none}
+
+  /* دکمه بازگشت به بالا */
+  #toTop{
+    position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:55;
+    width:46px;height:46px;border-radius:50%;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line);box-shadow:0 8px 22px rgba(120,70,40,.2);
+    display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+    opacity:0;pointer-events:none;transition:opacity .2s
+  }
+  #toTop.on{opacity:1;pointer-events:auto}
+
+  /* انیمیشن ورود صفحه‌ها */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .anim{animation:fadeUp .3s ease both}
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}
+    html{scroll-behavior:auto}
+  }
 </style>
 </head>
 <body>
 
-<!-- ویو ۰: اسپلش -->
-<section id="view-splash" class="view-full" hidden>
-  <div class="splash-logo" aria-hidden="true">
+<!-- ═══════════ ویو ۰: اسپلش ═══════════ -->
+<section id="view-splash" class="splash" hidden aria-label="خوش آمدید">
+  <div class="logo-badge" aria-hidden="true">
     <svg viewBox="0 0 120 120">
       <path d="M50 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".9"/>
       <path d="M67 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".55"/>
@@ -222,68 +344,111 @@
     </svg>
   </div>
   <h1>کافه رترو</h1>
-  <p class="latin-splash">RETRO CAFE</p>
+  <p class="latin">RETRO CAFE</p>
+  <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+  <p class="skip">برای رد کردن، صفحه را لمس کن</p>
 </section>
 
-<!-- ویو ۱: خوش‌آمد -->
-<section id="view-home" class="view" hidden>
+<!-- ═══════════ ویو ۱: خوش‌آمد + دسته‌ها ═══════════ -->
+<section id="view-welcome" class="page" hidden>
   <div class="welcome-hero">
-    <div class="welcome-txt">
-      <h2 dir="ltr">Welcome to <span class="hl">Retro</span></h2>
+    <div class="logo-badge" aria-hidden="true">
+      <svg viewBox="0 0 120 120">
+        <path d="M50 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".9"/>
+        <path d="M67 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".55"/>
+        <ellipse cx="60" cy="101" rx="35" ry="8" fill="#FFFFFF" opacity=".95"/>
+        <path d="M86 61 c11 -1 14 13 4 20 c-4.5 3 -9.5 3.4 -13 2" stroke="#FFFFFF" stroke-width="7.5" fill="none" stroke-linecap="round"/>
+        <path d="M33 54 h54 l-6.5 37 a9 9 0 0 1 -9 7.5 h-23 a9 9 0 0 1 -9 -7.5 z" fill="#FFFFFF"/>
+        <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="#8A5A2B"/>
+        <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+        <circle cx="60" cy="79" r="8.5" fill="#D63A2F"/>
+        <text x="60" y="83.5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">R</text>
+      </svg>
     </div>
+    <h1 id="w-name"></h1>
+    <p class="tagline" id="w-tagline"></p>
+    <div class="pills" id="w-pills"></div>
   </div>
-  <div class="bottom-cta">
-    <a class="cta" href="#/menu">مشاهده منو</a>
+  <div class="welcome-body">
+    <p class="lead">دنبال چی هستی؟ <span>یکی رو انتخاب کن</span></p>
+    <div class="catgrid" id="catgrid"></div>
+    <a class="cta" href="#/menu">مشاهده‌ی کامل منو <span aria-hidden="true">←</span></a>
+    <footer>
+      <div class="fcard" id="w-foot"></div>
+      <p class="credit" id="credit"></p>
+    </footer>
   </div>
 </section>
 
-<!-- ویو ۲: دسته‌ها + جستجو -->
-<section id="view-menu" class="view" hidden>
-  <div class="topbar"><div class="topbar-in">
-    <a class="back" href="#/" aria-label="بازگشت">→</a>
-    <div class="topbar-title"><span id="menu-name"></span></div>
-  </div></div>
-  <div class="search">
-    <input id="q" type="search" placeholder="جستجو در منو…" autocomplete="off">
-    <span class="ic">🔍</span>
+<!-- ═══════════ ویو ۲: منو ═══════════ -->
+<section id="view-menu" class="page" hidden>
+  <header class="topbar" id="topbar">
+    <div class="tb-row">
+      <a class="icon-btn" href="#/welcome" aria-label="بازگشت به صفحه‌ی خوش‌آمد">→</a>
+      <div class="search">
+        <input id="q" type="search" placeholder="جستجوی سریع در منو…" autocomplete="off" enterkeyhint="search" aria-label="جستجو در منو">
+        <span class="ic" aria-hidden="true">🔍</span>
+        <button class="clr" id="qclr" type="button" hidden aria-label="پاک کردن جستجو">✕</button>
+      </div>
+    </div>
+    <nav class="chips" id="chips" aria-label="دسته‌بندی‌های منو"></nav>
+  </header>
+
+  <div class="menu-wrap">
+    <div class="menu-hero">
+      <div>
+        <div class="logo-badge" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <path d="M50 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".9"/>
+            <path d="M67 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".55"/>
+            <ellipse cx="60" cy="101" rx="35" ry="8" fill="#FFFFFF" opacity=".95"/>
+            <path d="M86 61 c11 -1 14 13 4 20 c-4.5 3 -9.5 3.4 -13 2" stroke="#FFFFFF" stroke-width="7.5" fill="none" stroke-linecap="round"/>
+            <path d="M33 54 h54 l-6.5 37 a9 9 0 0 1 -9 7.5 h-23 a9 9 0 0 1 -9 -7.5 z" fill="#FFFFFF"/>
+            <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="#8A5A2B"/>
+            <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+            <circle cx="60" cy="79" r="8.5" fill="#D63A2F"/>
+            <text x="60" y="83.5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">R</text>
+          </svg>
+        </div>
+        <div>
+          <h1 id="m-name"></h1>
+          <p id="m-sub"></p>
+        </div>
+      </div>
+    </div>
+
+    <section class="specials" id="specials" hidden aria-labelledby="spec-title">
+      <div class="spec-head"><h2 id="spec-title">⭐ پیشنهاد ویژه‌ی رترو</h2><span id="spec-count"></span></div>
+      <div class="spec-strip" id="spec-strip"></div>
+    </section>
+
+    <div id="sections"></div>
+    <div id="results" hidden aria-live="polite"></div>
+
+    <footer>
+      <div class="fcard" id="m-foot"></div>
+      <p class="credit" id="credit2"></p>
+    </footer>
   </div>
-  <div class="catlist" id="catlist-menu"></div>
-  <div id="results" hidden></div>
 </section>
 
-<!-- ویو ۳: آیتم‌های دسته -->
-<section id="view-items" class="view" hidden>
-  <div class="topbar"><div class="topbar-in">
-    <a class="back" href="#/menu" aria-label="بازگشت">→</a>
-    <div class="topbar-title"><span id="items-ico"></span> <span id="items-name"></span></div>
-    <span class="count" id="items-count"></span>
-  </div></div>
-  <main id="items"></main>
-</section>
-
-<footer>
-  <div class="rule"></div>
-  <a class="tel" id="f-tel" href="#" hidden>📞 تماس با کافه</a>
-  <div class="frow" id="f-address" hidden></div>
-  <div class="frow" id="f-ig" hidden></div>
-  <div class="credit" id="f-hours" hidden></div>
-</footer>
+<button id="toTop" type="button" aria-label="بازگشت به بالای صفحه">↑</button>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
    ⚙️  داده‌های منو — همه‌چیز رو از همین‌جا تغییر بده
-   ═══════════════════════════════════════════════════════════
+   ═══════════════════════════════════════════════════════════════
 
    📌 راهنمای سریع:
-   • price: قیمت به «هزار تومان» — مثلاً ۱۲۵ یعنی ۱۲۵ هزار تومان
-   • badge: "" (هیچ) | "special" (پیشنهاد ویژه) | "new" (جدید) | "soldout" (ناتمام)
-    • description: توضیح و ترکیبات آیتم — اگه نمی‌خوای خالی بذار ""
-    • imageUrl: آدرس عکس آیتم — اگه خالی باشه آیکون دسته نشون داده می‌شه
-    • برای دسته‌ی جدید، یکی از بلوک‌های { ... } رو کپی کن و تغییرش بده
-   • ساعت کاری، شماره تلفن، آدرس و اینستاگرام رو که داشتی، همین بالا پر کن
-     (هر کدوم خالی باشه، از منو حذف می‌شه)
+   • price      : قیمت — یا به «هزار تومان» بنویس (مثلاً ۱۱۵ = ۱۱۵,۰۰۰ تومان)
+                  یا کامل بنویس (۱۱۵۰۰۰). هر دو حالت درست نشون داده می‌شه.
+   • badge      : "" (هیچ) | "special" (پیشنهاد ویژه) | "new" (جدید)
+                  | "popular" (پرطرفدار) | "soldout" (ناموجود)
+   • description: توضیح و ترکیبات آیتم — نمی‌خوای؟ خالی بذار ""
+   • imageUrl   : آدرس عکس آیتم — خالی باشه آیکون دسته نشون داده می‌شه
+   • دسته‌ی جدید: یکی از بلوک‌های { ... } رو کپی کن و اسم/آیتم‌هاش رو عوض کن
+   • خط تلفن/آدرس/اینستاگرام/ساعت کاری: هر کدوم خالی باشه از منو حذف می‌شه
 */
-
 const CAFE = {
   name:      "کافه رترو",
   tagline:   "حسِ خوب کافه‌های قدیم",
@@ -291,6 +456,13 @@ const CAFE = {
   phone:     "09369192297",
   instagram: "Caferetro_ir",
   address:   "نسیم شهر، خیابان اصلی، جنب درمانگاه قائم",
+  /* ساعت کاری به عدد ۲۴ ساعتی — برای نمایش «الان باز است / بسته است»
+     اگه نمی‌خوای این برچسب نشون داده بشه، هر دو رو ۰ بذار */
+  openHour:  10,
+  closeHour: 22,
+  /* عکس محیط کافه (اختیاری) — مثلاً "images/hero.jpg"
+     اگه خالی باشه، پس‌زمینه‌ی طرح خودکار نمایش داده می‌شه */
+  heroImage: "",
 };
 
 const CATEGORIES = [
@@ -383,173 +555,376 @@ const CATEGORIES = [
 
 /* ═══════════════ پایان داده‌ها — از این‌جا به بعد دست نزن ═══════════════ */
 
-const $ = s => document.querySelector(s);
+const $  = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
 const fa = n => Number(n).toLocaleString('fa-IR');
 const faDigits = s => String(s).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
-const norm = s => String(s).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/\u200c/g,' ').toLowerCase();
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+
+/* جستجوی فارسی‌فهم: ی/ي، ک/ك، آ/ا، اعداد فارسی و نیم‌فاصله یکسان می‌شن */
+const norm = s => String(s)
+  .replace(/[يى]/g, 'ی').replace(/ك/g, 'ک')
+  .replace(/[آأإٱ]/g, 'ا').replace(/[ۀؤ]/g, 'ه')
+  .replace(/[\u200c\u200e\u200f]/g, ' ')
+  .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+  .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+  .toLowerCase().trim();
+
 const BADGE = {
-  special:  { txt: 'پیشنهاد ویژه', cls: 'special' },
-  new:      { txt: 'جدید',         cls: 'new' },
-  soldout:  { txt: 'ناتمام',       cls: 'soldout' },
+  special: { txt: 'پیشنهاد ویژه', cls: 'special' },
+  new:     { txt: 'جدید',         cls: 'new' },
+  popular: { txt: 'پرطرفدار',     cls: 'popular' },
+  soldout: { txt: 'ناموجود',      cls: 'soldout' },
 };
-const priceTxt = p => fa(p) + ' <small>هزار تومان</small>';
 
-/* هدر */
-document.title = CAFE.name + ' | منو';
-/* ساعت کاری در فوتر نمایش داده می‌شود (f-hours) */
-
-/* فوتر — هر فیلدی خالی باشه نمایش داده نمی‌شه */
-if (CAFE.phone) {
-  $('#f-tel').hidden = false;
-  const dial = String(CAFE.phone).replace(/^\+/, '');
-  const intl = dial.startsWith('0') ? '+98' + dial.slice(1) : '+' + dial;
-  $('#f-tel').href = 'tel:' + intl;
-  $('#f-tel').innerHTML = '📞 تماس با کافه';
+/* قیمت: کمتر از ۱۰٬۰۰۰ یعنی «هزار تومان» وارد شده، بیشتر یعنی تومان کامل */
+function priceHTML(p){
+  const n = Math.max(0, Math.round(Number(p) || 0));
+  const toman = n < 10000 ? n * 1000 : n;
+  return fa(toman) + ' <small>تومان</small>';
 }
-if (CAFE.address) { $('#f-address').hidden = false; $('#f-address').textContent = '📍 ' + CAFE.address; }
-if (CAFE.instagram) {
-  $('#f-ig').hidden = false;
-  $('#f-ig').innerHTML = 'اینستاگرام: <a href="https://instagram.com/' + encodeURIComponent(CAFE.instagram) + '" dir="ltr">@' + CAFE.instagram + '</a>';
-}
-if (CAFE.hours) { $('#f-hours').hidden = false; $('#f-hours').textContent = '🕐 ' + CAFE.hours; }
 
-/* کارت یک آیتم — withCat برچسب دسته را در نتایج جستجو نشان می‌دهد */
-function itemCard(cat, it, withCat) {
+/* ─────────── فوتر مشترک ─────────── */
+function fillFooter(){
+  const html = [];
+  if (CAFE.hours) html.push(
+    '<div class="frow"><span class="fi">🕐</span><span class="fb">' +
+    '<span class="fl">ساعت کاری</span><span class="fv">' + esc(CAFE.hours) + '</span></span></div>');
+  if (CAFE.address) html.push(
+    '<a class="frow" href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CAFE.address) +
+    '" target="_blank" rel="noopener"><span class="fi">📍</span><span class="fb">' +
+    '<span class="fl">آدرس — برای مسیریابی بزن</span><span class="fv">' + esc(CAFE.address) + '</span></span></a>');
+  if (CAFE.instagram) html.push(
+    '<a class="frow" href="https://instagram.com/' + encodeURIComponent(CAFE.instagram) +
+    '" target="_blank" rel="noopener"><span class="fi">📷</span><span class="fb">' +
+    '<span class="fl">اینستاگرام</span><span class="fv" dir="ltr">@' + esc(CAFE.instagram) + '</span></span></a>');
+  if (CAFE.phone) {
+    const dial = String(CAFE.phone).replace(/^\+/, '');
+    const intl = dial.startsWith('0') ? '+98' + dial.slice(1) : '+' + dial;
+    html.push('<a class="frow tap" href="tel:' + esc(intl) + '"><span class="fi">📞</span> تماس با کافه</a>');
+  }
+  ['#w-foot', '#m-foot'].forEach(sel => { const el = $(sel); if (el) el.innerHTML = html.join(''); });
+
+  const credit = '☕ ' + CAFE.name + ' — منوی دیجیتال<br>قیمت‌ها به تومان است و ممکن است تغییر کند.';
+  const c1 = $('#credit'), c2 = $('#credit2');
+  if (c1) c1.innerHTML = credit;
+  if (c2) c2.innerHTML = credit;
+}
+
+/* ─────────── «الان باز است؟» ─────────── */
+function openState(){
+  const o = Number(CAFE.openHour), c = Number(CAFE.closeHour);
+  if (!(o >= 0 && c > 0 && c > o)) return null;
+  const now = new Date();
+  const h = now.getHours() + now.getMinutes() / 60;
+  const isOpen = h >= o && h < c;
+  const t = n => faDigits(String(n).padStart(2, '0')) + ':۰۰';
+  return isOpen
+    ? { cls: 'open',   txt: 'الان بازیم', detail: 'تا ساعت ' + t(c) }
+    : { cls: 'closed', txt: 'الان بسته‌ایم', detail: 'از ساعت ' + t(o) + ' باز می‌شویم' };
+}
+
+/* ─────────── ساخت کارت‌ها ─────────── */
+function imgTag(url, alt, cls){
+  if (!url) return '';
+  return '<img class="' + cls + '" src="' + esc(url) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async" onerror="this.remove()">';
+}
+
+function itemCard(cat, it, withCat){
   const b = BADGE[it.badge];
-  const card = document.createElement('article');
-  card.className = 'card' + (it.badge === 'soldout' ? ' out' : '');
-  card.innerHTML =
-    '<div class="ph">' + cat.icon +
-      (it.imageUrl ? '<img src="' + it.imageUrl + '" alt="' + it.name + '" loading="lazy" onerror="this.remove()">' : '') +
-    '</div>' +
+  const out = it.badge === 'soldout';
+  const el = document.createElement('article');
+  el.className = 'card' + (out ? ' out' : '');
+  el.innerHTML =
+    '<div class="ph">' + cat.icon + imgTag(it.imageUrl, it.name) + '</div>' +
     '<div class="info">' +
-      '<div class="nm">' + it.name +
+      '<div class="nm">' + esc(it.name) +
         (b ? ' <span class="bd ' + b.cls + '">' + b.txt + '</span>' : '') +
-        (withCat ? ' <span style="color:var(--muted);font-size:.72rem;font-weight:400">' + cat.icon + ' ' + cat.name + '</span>' : '') +
+        (withCat ? ' <span class="cat-tag">' + cat.icon + ' ' + esc(cat.name) + '</span>' : '') +
       '</div>' +
-      (it.description ? '<div class="ds">' + it.description + '</div>' : '') +
-      '<div class="pr">' + priceTxt(it.price) + '</div>' +
+      (it.description ? '<div class="ds">' + esc(it.description) + '</div>' : '') +
+      '<div class="pr">' + priceHTML(it.price) + '</div>' +
     '</div>';
-  return card;
+  return el;
 }
 
-/* ردیف یک دسته */
-function catRow(cat) {
+function specialCard(cat, it){
   const a = document.createElement('a');
-  a.className = 'catrow';
-  a.href = '#/cat/' + cat.id;
+  a.className = 'spec';
+  a.href = '#/menu/' + cat.id;
   a.innerHTML =
-    '<div class="th">' + cat.icon +
-      (cat.items[0] && cat.items[0].imageUrl
-        ? '<img src="' + cat.items[0].imageUrl + '" alt="' + cat.name + '" loading="lazy" onerror="this.remove()">'
-        : '') +
-    '</div>' +
-    '<div><div class="nm">' + cat.name + '</div>' +
-    '<div class="ct">' + fa(cat.items.length) + ' آیتم</div></div>' +
-    '<span class="go">‹</span>';
+    '<div class="im">' + cat.icon + imgTag(it.imageUrl, it.name) +
+      (it.badge === 'new' ? '<span class="bdg">جدید</span>' : '<span class="bdg">ویژه</span>') + '</div>' +
+    '<div class="tx"><div class="nm">' + esc(it.name) + '</div>' +
+    '<div class="pr">' + priceHTML(it.price) + '</div></div>';
   return a;
 }
 
-/* ساخت لیست دسته‌ها */
-$('#menu-name').textContent = CAFE.name;
-function buildCatList(el) {
-  el.innerHTML = '';
-  CATEGORIES.forEach(cat => el.appendChild(catRow(cat)));
-}
-buildCatList($('#catlist-menu'));
+/* مرتب‌سازی: موجود‌ها اول، ناموجود‌ها آخر (داخل هر دسته) */
+const sortItems = arr => arr.slice().sort((a, b) =>
+  (a.badge === 'soldout' ? 1 : 0) - (b.badge === 'soldout' ? 1 : 0));
 
-/* رندر آیتم‌های یک دسته */
-const itemsEl = $('#items');
-function renderItems(id) {
-  const cat = CATEGORIES.find(c => c.id === id) || CATEGORIES[0];
-  $('#items-ico').textContent = cat.icon;
-  $('#items-name').textContent = cat.name;
-  $('#items-count').textContent = fa(cat.items.length) + ' آیتم';
-  document.title = cat.name + ' | ' + CAFE.name;
-  itemsEl.innerHTML = '';
-  cat.items.forEach(it => itemsEl.appendChild(itemCard(cat, it, false)));
-}
+/* ─────────── رندر کامل منو ─────────── */
+const sectionsEl = $('#sections');
+const chipsEl = $('#chips');
 
-/* روتر: اسپلش ← خوش‌آمد ← دسته‌ها ← آیتم‌ها (دکمه برگشت گوشی هم کار می‌کند)
-   ترنزیشن جهت‌دار: جلو رفتن از چپ، برگشتن از راست */
-const views = { splash: $('#view-splash'), home: $('#view-home'), menu: $('#view-menu'), items: $('#view-items') };
-const DEPTH = { splash: 0, home: 1, menu: 2, items: 3 };
-let currentView = 'splash';
-function show(name, dir) {
-  Object.keys(views).forEach(k => {
-    const v = views[k];
-    v.hidden = (k !== name);
-    v.classList.remove('enter-fwd', 'enter-back');
+function buildChips(){
+  chipsEl.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const a = document.createElement('a');
+    a.className = 'chip';
+    a.href = '#/menu/' + cat.id;
+    a.dataset.cat = cat.id;
+    a.textContent = cat.icon + ' ' + cat.name;
+    chipsEl.appendChild(a);
   });
-  if (dir > 0) views[name].classList.add('enter-fwd');
-  else if (dir < 0) views[name].classList.add('enter-back');
-  scrollTo(0, 0);
-  currentView = name;
 }
-function route() {
-  const h = location.hash || '#/';
-  q.value = '';
-  resEl.innerHTML = '';
-  resEl.hidden = true;
-  document.body.classList.remove('searching');
-  let target = 'splash';
-  if (h.indexOf('#/cat/') === 0) {
-    renderItems(h.slice(6));
-    target = 'items';
-  } else if (h === '#/menu') {
-    document.title = 'منو | ' + CAFE.name;
-    target = 'menu';
-  } else if (h === '#/welcome') {
-    document.title = CAFE.name + ' | خوش آمدید';
-    target = 'home';
-    try { sessionStorage.setItem('retro_seen', '1'); } catch (e) {}
-  } else {
-    document.title = CAFE.name;
-    try { if (sessionStorage.getItem('retro_seen')) target = 'home'; } catch (e) {}
-  }
-  show(target, DEPTH[target] - DEPTH[currentView]);
-  if (target === 'splash') {
-    setTimeout(() => {
-      if ((location.hash || '#/') === '#/' && currentView === 'splash')
-        location.hash = '#/welcome';
-    }, 2800);
-  }
-}
-/* لمس اسپلش هم رد می‌شود */
-$('#view-splash').addEventListener('click', () => { location.hash = '#/welcome'; });
-addEventListener('hashchange', route);
 
-/* جستجو */
-const q = $('#q'), resEl = $('#results');
-q.addEventListener('input', () => {
-  const query = norm(q.value).trim();
+function buildSections(){
+  sectionsEl.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const sec = document.createElement('section');
+    sec.className = 'cat';
+    sec.id = 'cat-' + cat.id;
+    sec.innerHTML =
+      '<div class="cat-head"><span class="ico">' + cat.icon + '</span><h2>' + esc(cat.name) +
+      ' <span class="ct">' + fa(cat.items.length) + ' آیتم</span></h2><span class="rule"></span></div>' +
+      '<div class="items"></div>';
+    const box = sec.querySelector('.items');
+    sortItems(cat.items).forEach(it => box.appendChild(itemCard(cat, it, false)));
+    sectionsEl.appendChild(sec);
+  });
+}
+
+function buildSpecials(){
+  const list = [];
+  CATEGORIES.forEach(cat => cat.items.forEach(it => {
+    if (it.badge === 'special') list.push({ cat, it });
+  }));
+  const box = $('#specials'), strip = $('#spec-strip');
+  if (!list.length) { box.hidden = true; return; }
+  box.hidden = false;
+  $('#spec-count').textContent = fa(list.length) + ' انتخاب از منو';
+  strip.innerHTML = '';
+  list.forEach(({ cat, it }) => strip.appendChild(specialCard(cat, it)));
+}
+
+function applyHero(){
+  const hero = $('.welcome-hero');
+  const url = CAFE.heroImage || '';
+  if (url) {
+    hero.classList.add('has-img');
+    hero.style.setProperty('--hero', 'url("' + url + '")');
+    const mh = $('.menu-hero');
+    mh.classList.add('has-img');
+    mh.style.setProperty('--hero', 'url("' + url + '")');
+  }
+}
+
+function buildWelcome(){
+  applyHero();
+  $('#w-name').textContent = CAFE.name;
+  $('#w-tagline').textContent = CAFE.tagline || '';
+  document.title = CAFE.name + ' | خوش آمدید';
+
+  /* برچسب‌های بالای صفحه */
+  const pills = [];
+  const st = openState();
+  if (st) pills.push('<span class="pill ' + st.cls + '">' + (st.cls === 'open' ? '🟢' : '🔴') +
+    ' <b>' + st.txt + '</b> ' + st.detail + '</span>');
+  if (CAFE.hours) pills.push('<span class="pill">🕐 ' + esc(CAFE.hours) + '</span>');
+  $('#w-pills').innerHTML = pills.join('');
+
+  /* شبکه‌ی دسته‌ها — با یک لمس مستقیم می‌ره سر همون دسته */
+  const grid = $('#catgrid');
+  grid.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const a = document.createElement('a');
+    a.className = 'catcard';
+    a.href = '#/menu/' + cat.id;
+    a.innerHTML =
+      '<div class="ic">' + cat.icon + imgTag(cat.items[0] && cat.items[0].imageUrl, cat.name) + '</div>' +
+      '<div class="nm">' + esc(cat.name) + '</div>' +
+      '<div class="ct">' + fa(cat.items.length) + ' آیتم</div>';
+    grid.appendChild(a);
+  });
+}
+
+/* ─────────── هدر چسبان: ارتفاع + اسکرول‌اسپای ─────────── */
+const topbar = $('#topbar');
+function measureHead(){
+  const h = topbar.offsetHeight || 104;
+  document.documentElement.style.setProperty('--head-h', h + 'px');
+}
+addEventListener('resize', measureHead);
+addEventListener('load', measureHead);
+
+function headH(){
+  return (topbar && topbar.offsetHeight) || 104;
+}
+function scrollToCat(id, smooth){
+  const sec = document.getElementById('cat-' + id);
+  if (!sec) return;
+  const hv = headH();
+  const y = sec.getBoundingClientRect().top + scrollY - hv - 10;
+  scrollTo({ top: Math.max(0, y), behavior: smooth === false ? 'auto' : 'smooth' });
+}
+
+let spyLock = 0;
+function spy(){
+  if (Date.now() < spyLock) return;
+  const hv = headH() + 24;
+  let active = null;
+  CATEGORIES.forEach(cat => {
+    const sec = document.getElementById('cat-' + cat.id);
+    if (sec && sec.getBoundingClientRect().top - hv <= 0) active = cat.id;
+  });
+  if (!active) active = CATEGORIES[0] && CATEGORIES[0].id;
+  $$('.chip').forEach(c => {
+    const on = c.dataset.cat === active;
+    c.setAttribute('aria-current', on ? 'true' : 'false');
+    if (on && c.scrollIntoView) {
+      const r = c.getBoundingClientRect(), p = chipsEl.getBoundingClientRect();
+      if (r.left < p.left || r.right > p.right)
+        chipsEl.scrollTo({ left: chipsEl.scrollLeft + (r.left - p.left) - 60, behavior: 'smooth' });
+    }
+  });
+}
+let raf = 0;
+addEventListener('scroll', () => {
+  if (raf) return;
+  raf = requestAnimationFrame(() => {
+    raf = 0;
+    spy();
+    $('#toTop').classList.toggle('on', scrollY > 700);
+  });
+}, { passive: true });
+
+$('#toTop').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+chipsEl.addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  e.preventDefault();
+  spyLock = Date.now() + 700;          /* تا انیمیشن اسکرول تموم نشه، اسپای دستکاری نکن */
+  history.replaceState(null, '', '#/menu/' + chip.dataset.cat);
+  scrollToCat(chip.dataset.cat);
+  $$('.chip').forEach(c => c.setAttribute('aria-current', c === chip ? 'true' : 'false'));
+});
+
+/* ─────────── جستجو ─────────── */
+const qEl = $('#q'), resEl = $('#results'), clrEl = $('#qclr');
+let searchTimer = 0;
+
+function runSearch(raw){
+  const query = norm(raw);
   resEl.innerHTML = '';
   if (!query) {
-    document.body.classList.remove('searching');
     resEl.hidden = true;
+    document.body.classList.remove('searching');
+    sectionsEl.hidden = false;
+    $('#specials').hidden = !$('#spec-strip').children.length;
+    chipsEl.hidden = false;
+    requestAnimationFrame(measureHead);
     return;
   }
   document.body.classList.add('searching');
+  sectionsEl.hidden = true;
+  $('#specials').hidden = true;
+  chipsEl.hidden = true;
   resEl.hidden = false;
+  requestAnimationFrame(measureHead);
+
   const hits = [];
   CATEGORIES.forEach(cat => cat.items.forEach(it => {
-    if (norm(it.name + ' ' + (it.description || '')).includes(query))
+    if (norm(it.name + ' ' + (it.description || '') + ' ' + cat.name).includes(query))
       hits.push({ cat, it });
   }));
-  const title = document.createElement('p');
-  title.className = 'res-title';
-  title.innerHTML = hits.length
-    ? faDigits(hits.length) + ' مورد برای «<b>' + q.value.trim() + '</b>» پیدا شد'
-    : '';
-  resEl.appendChild(title);
+  hits.sort((a, b) => (a.it.badge === 'soldout' ? 1 : 0) - (b.it.badge === 'soldout' ? 1 : 0));
+
   if (!hits.length) {
-    resEl.innerHTML = '<div class="empty"><span class="big">🔍</span>چیزی با این اسم توی منو پیدا نشد</div>';
+    resEl.innerHTML =
+      '<div class="empty"><span class="big">🔍</span>چیزی با این اسم توی منو پیدا نشد' +
+      '<br><a class="sug" href="#/menu" onclick="clearSearch()">دیدن کل منو</a></div>';
     return;
   }
+  const t = document.createElement('p');
+  t.className = 'res-title';
+  t.innerHTML = faDigits(hits.length) + ' مورد برای «<b>' + esc(raw.trim()) + '</b>»';
+  resEl.appendChild(t);
   hits.forEach(({ cat, it }) => resEl.appendChild(itemCard(cat, it, true)));
-});
+}
 
-/* شروع از مسیر فعلی */
+function clearSearch(){ qEl.value = ''; clrEl.hidden = true; runSearch(''); }
+
+qEl.addEventListener('input', () => {
+  clrEl.hidden = !qEl.value;
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => runSearch(qEl.value), 110);
+});
+qEl.addEventListener('keydown', e => { if (e.key === 'Escape') clearSearch(); });
+clrEl.addEventListener('click', clearSearch);
+window.clearSearch = clearSearch;
+
+/* ─────────── روتر ─────────── */
+const views = { splash: $('#view-splash'), welcome: $('#view-welcome'), menu: $('#view-menu') };
+let current = 'splash';
+
+function show(name){
+  Object.keys(views).forEach(k => { views[k].hidden = (k !== name); });
+  views[name].classList.remove('anim');
+  void views[name].offsetWidth;
+  views[name].classList.add('anim');
+  current = name;
+  measureHead();
+  spy();
+}
+
+let splashTimer = 0;
+function route(){
+  const h = location.hash || '#/';
+  clearTimeout(splashTimer);
+
+  if (h.indexOf('#/menu') === 0) {
+    const catId = h.split('/')[2] || '';
+    document.title = 'منو | ' + CAFE.name;
+    show('menu');
+    if (catId) {
+      requestAnimationFrame(() => { scrollToCat(catId, false); spy(); });
+    } else {
+      scrollTo(0, 0);
+    }
+    return;
+  }
+  if (h === '#/welcome') {
+    try { sessionStorage.setItem('retro_seen', '1'); } catch (e) {}
+    buildWelcome();
+    show('welcome');
+    scrollTo(0, 0);
+    return;
+  }
+  /* مسیر پیش‌فرض: اسپلش، ولی برای مشتری‌های همیشگی مستقیم خوش‌آمد */
+  let target = 'splash';
+  try { if (sessionStorage.getItem('retro_seen')) target = 'welcome'; } catch (e) {}
+  if (target === 'welcome') { buildWelcome(); document.title = CAFE.name + ' | خوش آمدید'; }
+  else document.title = CAFE.name;
+  show(target);
+  scrollTo(0, 0);
+  if (target === 'splash') {
+    splashTimer = setTimeout(() => {
+      if ((location.hash || '#/') === '#/' && current === 'splash') location.hash = '#/welcome';
+    }, 1800);
+  }
+}
+
+$('#view-splash').addEventListener('click', () => { location.hash = '#/welcome'; });
+addEventListener('hashchange', route);
+
+/* ─────────── راه‌اندازی ─────────── */
+fillFooter();
+buildChips();
+buildSections();
+buildSpecials();
+buildWelcome();
 route();
 
 /* PWA — کش آفلاین بعد از اولین بازدید */
