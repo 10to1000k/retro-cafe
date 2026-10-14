@@ -52,11 +52,12 @@
   /* ── اسپلش ── */
   .view-full{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;
     background:linear-gradient(160deg,#FF7E54,#EE4D2B);color:#fff;text-align:center;padding:24px;cursor:pointer}
-  .splash-logo{width:126px;height:126px;border-radius:50%;overflow:hidden;
-    border:6px solid rgba(255,255,255,.92);box-shadow:0 18px 44px rgba(0,0,0,.28);margin-bottom:24px;
+  .splash-logo{width:126px;height:126px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:3.4rem;
+    background:rgba(255,255,255,.16);border:6px solid rgba(255,255,255,.92);
+    box-shadow:0 18px 44px rgba(0,0,0,.28);margin-bottom:24px;
     animation:pop .5s cubic-bezier(.2,.9,.3,1.2)}
   @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
-  .splash-logo img{width:100%;height:100%;object-fit:cover;display:block}
   .view-full h1{font-size:2.3rem;font-weight:800}
   .latin-splash{font-family:Georgia,'Times New Roman',serif;font-size:.85rem;letter-spacing:.42em;text-indent:.42em;opacity:.92;margin-top:10px}
 
@@ -211,7 +212,7 @@
 
 <!-- ویو ۰: اسپلش -->
 <section id="view-splash" class="view-full" hidden>
-  <div class="splash-logo"><img src="images/items/%D9%84%D8%A7%D8%AA%D9%87.jpg" alt="کافه رترو"></div>
+  <div class="splash-logo">☕</div>
   <h1>کافه رترو</h1>
   <p class="latin-splash">RETRO CAFE</p>
 </section>
@@ -227,8 +228,7 @@
     <div class="bubble b6"><img src="images/items/%D8%B3%D8%A7%D9%84%D8%A7%D8%AF%20%D8%B3%D8%B2%D8%A7%D8%B1.jpg" alt="سالاد سزار" loading="lazy"></div>
   </div>
   <div class="welcome-txt">
-    <h2>خوش اومدی به <span class="coral" id="w-name">رترو</span>! 👋</h2>
-    <p id="w-tagline"></p>
+    <h2 dir="ltr">Welcome to <span class="coral">Retro</span>! 👋</h2>
     <div><span class="hours" id="hero-hours-pill">🕐 <span id="hero-hours"></span></span></div>
   </div>
   <div class="bottom-cta">
@@ -395,9 +395,6 @@ const priceTxt = p => fa(p) + ' <small>هزار تومان</small>';
 
 /* هدر */
 document.title = CAFE.name + ' | منو';
-$('#w-name').textContent = CAFE.name.replace('کافه', '').trim();
-$('#w-tagline').textContent = CAFE.tagline;
-if (!CAFE.tagline) $('#w-tagline').remove();
 if (CAFE.hours) { $('#hero-hours').textContent = CAFE.hours; } else { $('#hero-hours-pill').remove(); }
 
 /* فوتر — هر فیلدی خالی باشه نمایش داده نمی‌شه */
@@ -514,7 +511,7 @@ function route() {
     setTimeout(() => {
       if ((location.hash || '#/') === '#/' && currentView === 'splash')
         location.hash = '#/welcome';
-    }, 1500);
+    }, 2800);
   }
 }
 /* لمس اسپلش هم رد می‌شود */
