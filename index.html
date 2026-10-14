@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   ┌─────────────────────────────────────────────────────────────┐
-  │        منوی دیجیتال کافه رترو  —  نسخه‌ی موبایل (QR)         │
+  │         منوی دیجیتال RETRO CAFE  —  نسخه‌ی موبایل (QR)        │
   │                                                             │
   │  برای ویرایش منو (قیمت، آیتم، اسم کافه…) برو به بخش          │
   │  «⚙️ داده‌های منو» در پایین همین فایل.                        │
@@ -14,19 +14,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#D63A2F">
 <meta name="color-scheme" content="light">
-<meta name="description" content="منوی دیجیتال کافه رترو — نوشیدنی گرم، دمنوش، آیس کافی، شیک، غذا و قلیان">
-<meta property="og:title" content="کافه رترو | منو">
-<meta property="og:description" content="منوی دیجیتال کافه رترو">
+<meta name="description" content="منوی دیجیتال RETRO CAFE — نوشیدنی گرم، دمنوش، آیس کافی، شیک، غذا و قلیان">
+<meta property="og:title" content="RETRO CAFE | منو">
+<meta property="og:description" content="منوی دیجیتال RETRO CAFE">
 <meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
 <link rel="icon" type="image/png" href="icons/icon-192.png">
-<title>کافه رترو | منو</title>
+<title>RETRO CAFE | منو</title>
 <style>
   @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
   @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Medium.woff2') format('woff2');font-weight:500;font-display:swap}
   @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
   @font-face{font-family:'Vazirmatn';src:url('fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:800;font-display:swap}
+  /* نشان‌واره‌ی لاتین لوگو (فقط حروف لاتین — حجم کم) */
+  @font-face{font-family:'AlfaSlabOne';src:url('fonts/AlfaSlabOne-Latin.woff2') format('woff2');font-weight:400;font-display:swap}
 
   /* ═══ سیستم رنگ رترو: کرم / قهوه‌ای چوب / قرمز / طلایی ═══ */
   :root{
@@ -71,17 +74,20 @@
     background:linear-gradient(160deg,#E04A2F,#B3281F);color:#fff;text-align:center;
     padding:24px calc(24px + env(safe-area-inset-right)) 24px calc(24px + env(safe-area-inset-left));
   }
+  /* نشان (لوگو) — خود SVG کامل و گرد است، پس ظرف فقط سایز و سایه می‌دهد */
   .logo-badge{
-    width:118px;height:118px;border-radius:50%;flex-shrink:0;
+    width:132px;height:132px;border-radius:50%;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
-    background:var(--gold);border:5px solid rgba(255,255,255,.94);
-    box-shadow:0 18px 44px rgba(0,0,0,.28);
+    box-shadow:0 18px 44px rgba(0,0,0,.30);
     animation:pop .5s cubic-bezier(.2,.9,.3,1.2)
   }
-  .logo-badge svg{width:66%;height:66%}
+  .logo-badge svg{width:100%;height:100%;display:block}
   @keyframes pop{from{transform:scale(.62);opacity:0}to{transform:scale(1);opacity:1}}
-  .splash h1{font-size:2.15rem;font-weight:800;margin-top:22px;letter-spacing:-.5px}
-  .splash .latin{font-family:Georgia,'Times New Roman',serif;font-size:.8rem;letter-spacing:.42em;text-indent:.42em;opacity:.92;margin-top:8px}
+  /* اسم کافه همیشه لاتین */
+  .brand{font-family:'AlfaSlabOne',Georgia,'Times New Roman',serif;font-weight:400;direction:ltr;unicode-bidi:isolate}
+  .splash h1{font-size:2.7rem;line-height:1;margin-top:26px;letter-spacing:.015em}
+  .splash h1 .l2{display:block;font-size:1.02rem;letter-spacing:.68em;text-indent:.68em;color:var(--gold);margin-top:14px}
+  .splash .fa-sub{font-size:.82rem;opacity:.9;margin-top:16px}
   .splash .skip{margin-top:34px;font-size:.8rem;opacity:.85;border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:8px 20px}
   .dots{display:flex;gap:6px;margin-top:22px}
   .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);animation:bl 1.2s infinite}
@@ -98,7 +104,7 @@
       repeating-conic-gradient(from 0deg at 50% -35%, rgba(214,58,47,.07) 0deg 10deg, rgba(214,58,47,0) 10deg 20deg),
       var(--bg);
   }
-  .welcome-hero .logo-badge{width:96px;height:96px;border-width:4px;margin:0 auto;box-shadow:0 12px 30px rgba(214,58,47,.28)}
+  .welcome-hero .logo-badge{width:112px;height:112px;margin:0 auto;box-shadow:0 14px 34px rgba(214,58,47,.32)}
   .welcome-hero.has-img{
     background-image:linear-gradient(180deg,rgba(26,14,7,.66),rgba(26,14,7,.78)),var(--hero);
     background-size:cover;background-position:center;
@@ -111,7 +117,7 @@
   .welcome-hero.has-img .hint{color:#F3E5D6}
   .welcome-hero.has-img .hint b{color:var(--gold)}
   .welcome-hero.has-img .tagline{opacity:.94}
-  .welcome-hero h1{font-size:1.9rem;font-weight:800;margin-top:18px;letter-spacing:-.5px}
+  .welcome-hero h1{font-size:1.72rem;margin-top:20px;letter-spacing:.045em}
   .wstats{display:flex;gap:10px;justify-content:center;margin-top:18px}
   .wstat{
     background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:16px;
@@ -133,8 +139,12 @@
   .pill b{font-weight:700}
 
   .welcome-body{flex:1;width:100%;max-width:600px;margin:0 auto;padding:0 18px calc(28px + env(safe-area-inset-bottom))}
-  .lead{font-size:1.05rem;font-weight:800;text-align:center;margin:2px 0 16px}
-  .lead span{color:var(--accent-deep)}
+  /* سرعنوان بخش دسته‌بندی‌ها — به‌جای متن قبلی، یک تیتر آرام با خط تزئینی */
+  .lead{
+    display:flex;align-items:center;gap:12px;
+    font-size:.95rem;font-weight:800;color:var(--ink-soft);margin:6px 0 16px
+  }
+  .lead::before,.lead::after{content:'';flex:1;height:1px;background:var(--line)}
   .catgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media (min-width:520px){.catgrid{grid-template-columns:1fr 1fr 1fr}}
   .catcard{
@@ -210,21 +220,6 @@
     width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--wood);
     font-size:.8rem;display:flex;align-items:center;justify-content:center
   }
-  /* نوار دسته‌ها (چیپ) */
-  .chips{
-    display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
-    padding:2px 14px 11px;max-width:720px;margin:0 auto;
-    scroll-snap-type:x proximity;
-  }
-  .chips::-webkit-scrollbar{display:none}
-  .chip{
-    flex:0 0 auto;scroll-snap-align:center;text-decoration:none;white-space:nowrap;
-    border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
-    border-radius:999px;padding:8px 15px;font-size:.82rem;font-weight:500;
-    box-shadow:var(--shadow-sm);transition:background .15s,color .15s,border-color .15s
-  }
-  .chip[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;box-shadow:0 6px 16px rgba(214,58,47,.32)}
-
   /* ─────────── بدنه‌ی منو ─────────── */
   .menu-wrap{max-width:720px;margin:0 auto;padding:0 16px}
   .menu-hero{
@@ -237,7 +232,7 @@
     background:repeating-conic-gradient(from 0deg at 108% -20%, rgba(255,182,39,.16) 0deg 9deg, rgba(255,182,39,0) 9deg 18deg)
   }
   .menu-hero>div{position:relative;z-index:1;display:flex;align-items:center;gap:14px}
-  .menu-hero h1{font-size:1.25rem;font-weight:800}
+  .menu-hero h1{font-size:1.12rem;letter-spacing:.04em}
   .menu-hero p{font-size:.78rem;opacity:.85;margin-top:3px}
   .menu-hero.has-img{
     background-image:linear-gradient(120deg,rgba(26,14,7,.88),rgba(26,14,7,.52)),var(--hero);
@@ -249,8 +244,7 @@
     -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:none}
   .menu-hero .pill.open{background:rgba(47,122,61,.9);border-color:transparent;color:#fff}
   .menu-hero .pill.closed{background:rgba(176,68,68,.9);border-color:transparent;color:#fff}
-  .menu-hero .logo-badge{width:56px;height:56px;border-width:3px;box-shadow:none;animation:none}
-  .menu-hero .logo-badge svg{width:64%;height:64%}
+  .menu-hero .logo-badge{width:58px;height:58px;box-shadow:none;animation:none}
 
   /* پیشنهاد ویژه */
   .specials{margin-top:22px}
@@ -350,23 +344,38 @@
 </head>
 <body>
 
+<!-- ═══════════ نشان لوگو — یک‌بار تعریف، همه‌جا <use> ═══════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="logo-mark" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="60" fill="#C0301F"/>
+    <circle cx="60" cy="60" r="53.5" fill="none" stroke="#FFB627" stroke-width="2.75"/>
+    <circle cx="60" cy="60" r="46" fill="#FFF8EE"/>
+    <g fill="#F3E4C6" opacity=".55">
+      <path d="M60 60 L54.4 14.3 A46 46 0 0 1 65.6 14.3 Z"/>
+      <path d="M60 60 L99.8 37 A46 46 0 0 1 105.4 48.2 Z"/>
+      <path d="M60 60 L105.4 71.8 A46 46 0 0 1 99.8 83 Z"/>
+      <path d="M60 60 L65.6 105.7 A46 46 0 0 1 54.4 105.7 Z"/>
+      <path d="M60 60 L20.2 83 A46 46 0 0 1 14.6 71.8 Z"/>
+      <path d="M60 60 L14.6 48.2 A46 46 0 0 1 20.2 37 Z"/>
+    </g>
+    <g stroke="#B87A16" stroke-width="3.6" fill="none" stroke-linecap="round">
+      <path d="M53 41c-3.6-5.4 3.2-8.6 0-14"/>
+      <path d="M66.5 41c-3.6-5.4 3.2-8.6 0-14" opacity=".72"/>
+    </g>
+    <path d="M80 56c12 .5 13.5 13.5 -1.5 16.5" stroke="#C0301F" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M38 51c1.2 14.5 4.8 25.5 9 29.5c4.2 3.9 21.8 3.9 26 0c4.2-4 7.8-15 9-29.5z" fill="#C0301F"/>
+    <ellipse cx="60" cy="51" rx="22" ry="5.9" fill="#FFB627"/>
+    <path d="M34.5 86q25.5 10.5 51 0" stroke="#FFB627" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
 <!-- ═══════════ ویو ۰: اسپلش ═══════════ -->
 <section id="view-splash" class="splash" hidden aria-label="خوش آمدید">
   <div class="logo-badge" aria-hidden="true">
-    <svg viewBox="0 0 120 120">
-      <path d="M50 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".9"/>
-      <path d="M67 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".55"/>
-      <ellipse cx="60" cy="101" rx="35" ry="8" fill="#FFFFFF" opacity=".95"/>
-      <path d="M86 61 c11 -1 14 13 4 20 c-4.5 3 -9.5 3.4 -13 2" stroke="#FFFFFF" stroke-width="7.5" fill="none" stroke-linecap="round"/>
-      <path d="M33 54 h54 l-6.5 37 a9 9 0 0 1 -9 7.5 h-23 a9 9 0 0 1 -9 -7.5 z" fill="#FFFFFF"/>
-      <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="#8A5A2B"/>
-      <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
-      <circle cx="60" cy="79" r="8.5" fill="#D63A2F"/>
-      <text x="60" y="83.5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">R</text>
-    </svg>
+    <svg viewBox="0 0 120 120"><use href="#logo-mark"/></svg>
   </div>
-  <h1>کافه رترو</h1>
-  <p class="latin">RETRO CAFE</p>
+  <h1 class="brand"><span class="l1">RETRO</span><span class="l2">CAFE</span></h1>
+  <p class="fa-sub">منوی دیجیتال</p>
   <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
   <p class="skip">برای رد کردن، صفحه را لمس کن</p>
 </section>
@@ -375,26 +384,16 @@
 <section id="view-welcome" class="page" hidden>
   <div class="welcome-hero">
     <div class="logo-badge" aria-hidden="true">
-      <svg viewBox="0 0 120 120">
-        <path d="M50 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".9"/>
-        <path d="M67 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".55"/>
-        <ellipse cx="60" cy="101" rx="35" ry="8" fill="#FFFFFF" opacity=".95"/>
-        <path d="M86 61 c11 -1 14 13 4 20 c-4.5 3 -9.5 3.4 -13 2" stroke="#FFFFFF" stroke-width="7.5" fill="none" stroke-linecap="round"/>
-        <path d="M33 54 h54 l-6.5 37 a9 9 0 0 1 -9 7.5 h-23 a9 9 0 0 1 -9 -7.5 z" fill="#FFFFFF"/>
-        <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="#8A5A2B"/>
-        <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
-        <circle cx="60" cy="79" r="8.5" fill="#D63A2F"/>
-        <text x="60" y="83.5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">R</text>
-      </svg>
+      <svg viewBox="0 0 120 120"><use href="#logo-mark"/></svg>
     </div>
-    <h1 id="w-name"></h1>
+    <h1 id="w-name" class="brand"></h1>
     <p class="tagline" id="w-tagline"></p>
     <div class="wstats" id="w-stats"></div>
     <div class="pills" id="w-pills"></div>
-    <p class="hint">👆 برای دیدن منو <b>یکی از دسته‌ها</b> رو لمس کن</p>
+    <p class="hint">برای مشاهده‌ی منو، <b>یکی از دسته‌ها</b> را انتخاب کن</p>
   </div>
   <div class="welcome-body">
-    <p class="lead">دنبال چی هستی؟ <span>یکی رو انتخاب کن</span></p>
+    <h2 class="lead">دسته‌بندی منو</h2>
     <div class="catgrid" id="catgrid"></div>
     <a class="cta" href="#/menu">مشاهده‌ی کامل منو <span aria-hidden="true">←</span></a>
     <footer>
@@ -415,27 +414,16 @@
         <button class="clr" id="qclr" type="button" hidden aria-label="پاک کردن جستجو">✕</button>
       </div>
     </div>
-    <nav class="chips" id="chips" aria-label="دسته‌بندی‌های منو"></nav>
   </header>
 
   <div class="menu-wrap">
     <div class="menu-hero">
       <div>
         <div class="logo-badge" aria-hidden="true">
-          <svg viewBox="0 0 120 120">
-            <path d="M50 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".9"/>
-            <path d="M67 38 q5 -9 0 -18 q-4 -8 1 -15" stroke="#B3281F" stroke-width="4.5" fill="none" stroke-linecap="round" opacity=".55"/>
-            <ellipse cx="60" cy="101" rx="35" ry="8" fill="#FFFFFF" opacity=".95"/>
-            <path d="M86 61 c11 -1 14 13 4 20 c-4.5 3 -9.5 3.4 -13 2" stroke="#FFFFFF" stroke-width="7.5" fill="none" stroke-linecap="round"/>
-            <path d="M33 54 h54 l-6.5 37 a9 9 0 0 1 -9 7.5 h-23 a9 9 0 0 1 -9 -7.5 z" fill="#FFFFFF"/>
-            <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="#8A5A2B"/>
-            <ellipse cx="60" cy="54" rx="27" ry="7.5" fill="none" stroke="#FFFFFF" stroke-width="3"/>
-            <circle cx="60" cy="79" r="8.5" fill="#D63A2F"/>
-            <text x="60" y="83.5" text-anchor="middle" font-size="11" font-weight="800" fill="#FFFFFF">R</text>
-          </svg>
+          <svg viewBox="0 0 120 120"><use href="#logo-mark"/></svg>
         </div>
         <div>
-          <h1 id="m-name"></h1>
+          <h1 id="m-name" class="brand"></h1>
           <p id="m-sub"></p>
         </div>
       </div>
@@ -475,8 +463,8 @@
    • خط تلفن/آدرس/اینستاگرام/ساعت کاری: هر کدوم خالی باشه از منو حذف می‌شه
 */
 const CAFE = {
-  name:      "کافه رترو",
-  tagline:   "حسِ خوب کافه‌های قدیم",
+  name:      "RETRO CAFE",   /* اسم کافه — لاتین درج می‌شه */
+  tagline:   "",             /* شعار اختیاری؛ خالی بذارید تا نمایش داده نشه */
   hours:     "۱۰ صبح تا ۱۰ شب",
   phone:     "09369192297",
   instagram: "Caferetro_ir",
@@ -581,7 +569,6 @@ const CATEGORIES = [
 /* ═══════════════ پایان داده‌ها — از این‌جا به بعد دست نزن ═══════════════ */
 
 const $  = s => document.querySelector(s);
-const $$ = s => Array.from(document.querySelectorAll(s));
 const fa = n => Number(n).toLocaleString('fa-IR');
 const faDigits = s => String(s).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
@@ -691,19 +678,6 @@ const sortItems = arr => arr.slice().sort((a, b) =>
 
 /* ─────────── رندر کامل منو ─────────── */
 const sectionsEl = $('#sections');
-const chipsEl = $('#chips');
-
-function buildChips(){
-  chipsEl.innerHTML = '';
-  CATEGORIES.forEach(cat => {
-    const a = document.createElement('a');
-    a.className = 'chip';
-    a.href = '#/menu/' + cat.id;
-    a.dataset.cat = cat.id;
-    a.textContent = cat.icon + ' ' + cat.name;
-    chipsEl.appendChild(a);
-  });
-}
 
 function buildSections(){
   sectionsEl.innerHTML = '';
@@ -757,14 +731,18 @@ function pillsHTML(){
 function buildMenuHeader(){
   applyHero();
   $('#m-name').textContent = CAFE.name;
-  $('#m-sub').textContent = CAFE.tagline || '';
+  const msub = $('#m-sub');
+  msub.textContent = CAFE.tagline || '';
+  msub.hidden = !CAFE.tagline;
   $('#m-pills').innerHTML = pillsHTML();
 }
 
 function buildWelcome(){
   applyHero();
   $('#w-name').textContent = CAFE.name;
-  $('#w-tagline').textContent = CAFE.tagline || '';
+  const wtag = $('#w-tagline');
+  wtag.textContent = CAFE.tagline || '';
+  wtag.hidden = !CAFE.tagline;
   document.title = CAFE.name + ' | خوش آمدید';
 
   /* برچسب‌های بالا + آمار سریع کافه */
@@ -812,46 +790,16 @@ function scrollToCat(id, smooth){
   scrollTo({ top: Math.max(0, y), behavior: smooth === false ? 'auto' : 'smooth' });
 }
 
-let spyLock = 0;
-function spy(){
-  if (Date.now() < spyLock) return;
-  const hv = headH() + 24;
-  let active = null;
-  CATEGORIES.forEach(cat => {
-    const sec = document.getElementById('cat-' + cat.id);
-    if (sec && sec.getBoundingClientRect().top - hv <= 0) active = cat.id;
-  });
-  if (!active) active = CATEGORIES[0] && CATEGORIES[0].id;
-  $$('.chip').forEach(c => {
-    const on = c.dataset.cat === active;
-    c.setAttribute('aria-current', on ? 'true' : 'false');
-    if (on && c.scrollIntoView) {
-      const r = c.getBoundingClientRect(), p = chipsEl.getBoundingClientRect();
-      if (r.left < p.left || r.right > p.right)
-        chipsEl.scrollTo({ left: chipsEl.scrollLeft + (r.left - p.left) - 60, behavior: 'smooth' });
-    }
-  });
-}
 let raf = 0;
 addEventListener('scroll', () => {
   if (raf) return;
   raf = requestAnimationFrame(() => {
     raf = 0;
-    spy();
     $('#toTop').classList.toggle('on', scrollY > 700);
   });
 }, { passive: true });
 
 $('#toTop').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
-chipsEl.addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
-  if (!chip) return;
-  e.preventDefault();
-  spyLock = Date.now() + 700;          /* تا انیمیشن اسکرول تموم نشه، اسپای دستکاری نکن */
-  history.replaceState(null, '', '#/menu/' + chip.dataset.cat);
-  scrollToCat(chip.dataset.cat);
-  $$('.chip').forEach(c => c.setAttribute('aria-current', c === chip ? 'true' : 'false'));
-});
 
 /* ─────────── جستجو ─────────── */
 const qEl = $('#q'), resEl = $('#results'), clrEl = $('#qclr');
@@ -865,14 +813,12 @@ function runSearch(raw){
     document.body.classList.remove('searching');
     sectionsEl.hidden = false;
     $('#specials').hidden = !$('#spec-strip').children.length;
-    chipsEl.hidden = false;
     requestAnimationFrame(measureHead);
     return;
   }
   document.body.classList.add('searching');
   sectionsEl.hidden = true;
   $('#specials').hidden = true;
-  chipsEl.hidden = true;
   resEl.hidden = false;
   requestAnimationFrame(measureHead);
 
@@ -918,7 +864,6 @@ function show(name){
   views[name].classList.add('anim');
   current = name;
   measureHead();
-  spy();
 }
 
 let splashTimer = 0;
@@ -932,7 +877,7 @@ function route(){
     buildMenuHeader();
     show('menu');
     if (catId) {
-      requestAnimationFrame(() => { scrollToCat(catId, false); spy(); });
+      requestAnimationFrame(() => scrollToCat(catId, false));
     } else {
       scrollTo(0, 0);
     }
@@ -965,7 +910,6 @@ addEventListener('hashchange', route);
 /* ─────────── راه‌اندازی ─────────── */
 fillFooter();
 buildMenuHeader();
-buildChips();
 buildSections();
 buildSpecials();
 buildWelcome();
