@@ -1,5 +1,5 @@
 /* Service Worker — بعد از اولین بازدید، منو روی گوشی کش می‌شه و بدون اینترنت هم باز می‌شه */
-const VERSION = 'cafe-menu-v4';
+const VERSION = 'cafe-menu-v5';
 const CORE = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
