@@ -103,9 +103,24 @@
     background-image:linear-gradient(180deg,rgba(26,14,7,.66),rgba(26,14,7,.78)),var(--hero);
     background-size:cover;background-position:center;
   }
+  .welcome-hero.has-img{
+    padding-top:calc(72px + env(safe-area-inset-top));padding-bottom:54px;
+    box-shadow:inset 0 -46px 46px -40px rgba(0,0,0,.45);
+  }
   .welcome-hero.has-img h1,.welcome-hero.has-img .tagline{color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+  .welcome-hero.has-img .hint{color:#F3E5D6}
+  .welcome-hero.has-img .hint b{color:var(--gold)}
   .welcome-hero.has-img .tagline{opacity:.94}
-  .welcome-hero h1{font-size:1.85rem;font-weight:800;margin-top:18px}
+  .welcome-hero h1{font-size:1.9rem;font-weight:800;margin-top:18px;letter-spacing:-.5px}
+  .wstats{display:flex;gap:10px;justify-content:center;margin-top:18px}
+  .wstat{
+    background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:16px;
+    padding:9px 16px;min-width:80px;box-shadow:var(--shadow-sm)
+  }
+  .wstat b{display:block;font-size:1.1rem;font-weight:800;color:var(--accent-deep);line-height:1.5}
+  .wstat span{font-size:.68rem;color:var(--ink-soft)}
+  .hint{margin-top:16px;font-size:.78rem;color:var(--ink-soft)}
+  .hint b{color:var(--accent-deep)}
   .welcome-hero .tagline{color:var(--ink-soft);font-size:.95rem;margin-top:6px}
   .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
   .pill{
@@ -229,6 +244,11 @@
     background-size:cover;background-position:center;
   }
   .menu-hero.has-img::after{display:none}
+  .menu-hero .pills{position:relative;z-index:1;margin-top:14px;justify-content:flex-start}
+  .menu-hero .pill{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:none}
+  .menu-hero .pill.open{background:rgba(47,122,61,.9);border-color:transparent;color:#fff}
+  .menu-hero .pill.closed{background:rgba(176,68,68,.9);border-color:transparent;color:#fff}
   .menu-hero .logo-badge{width:56px;height:56px;border-width:3px;box-shadow:none;animation:none}
   .menu-hero .logo-badge svg{width:64%;height:64%}
 
@@ -277,6 +297,8 @@
     background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:1.9rem
   }
   .card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  /* آیکون‌های خالی (مثلاً قلیان بدون ایموجی) جای اشغال نکنن */
+  .card .ph:empty,.cat-head .ico:empty,.catcard .ic:empty,.spec .im:empty{display:none}
   .card .info{flex:1;min-width:0;display:flex;flex-direction:column}
   .card .nm{font-size:.97rem;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap;line-height:1.5}
   .card .ds{
@@ -367,7 +389,9 @@
     </div>
     <h1 id="w-name"></h1>
     <p class="tagline" id="w-tagline"></p>
+    <div class="wstats" id="w-stats"></div>
     <div class="pills" id="w-pills"></div>
+    <p class="hint">👆 برای دیدن منو <b>یکی از دسته‌ها</b> رو لمس کن</p>
   </div>
   <div class="welcome-body">
     <p class="lead">دنبال چی هستی؟ <span>یکی رو انتخاب کن</span></p>
@@ -415,6 +439,7 @@
           <p id="m-sub"></p>
         </div>
       </div>
+      <div class="pills" id="m-pills"></div>
     </div>
 
     <section class="specials" id="specials" hidden aria-labelledby="spec-title">
@@ -462,7 +487,7 @@ const CAFE = {
   closeHour: 22,
   /* عکس محیط کافه (اختیاری) — مثلاً "images/hero.jpg"
      اگه خالی باشه، پس‌زمینه‌ی طرح خودکار نمایش داده می‌شه */
-  heroImage: "",
+  heroImage: "images/hero.jpg",
 };
 
 const CATEGORIES = [
@@ -543,12 +568,12 @@ const CATEGORIES = [
     ],
   },
   {
-    id: "hookah", icon: "💨", name: "قلیان",
+    id: "hookah", icon: "", name: "قلیان",
     items: [
-      { name: "قلیان دو سیب", description: "تنباکوی دو سیب سنتی با دود غلیظ", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Hookah%20Shisha.jpg?width=600" },
-      { name: "قلیان لاو", description: "تنباکوی لاو با طعم شیرین میوه‌ای", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Hookah%20Lounge.jpg?width=600" },
-      { name: "قلیان مسکو", description: "تنباکوی مسکو با طعم خنک و تازه", price: 245, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Hookah%20Pipes%20at%20a%20Hookah%20lounge%20by%20Don%20Ramey%20Logan.jpg?width=600" },
-      { name: "قلیان آدامس دارچین", description: "تنباکوی آدامس دارچین با طعم شیرین و تند", price: 345, badge: "", imageUrl: "https://commons.wikimedia.org/wiki/Special:FilePath/File:Flickr%20-%20DavidDennisPhotos.com%20-%20Hookah-Shisha%20Pipes.jpg?width=600" },
+      { name: "قلیان دو سیب", description: "تنباکوی دو سیب سنتی با دود غلیظ", price: 245, badge: "", imageUrl: "images/items/tobacco-double-apple.jpg" },
+      { name: "قلیان لاو", description: "تنباکوی لاو با طعم شیرین میوه‌ای", price: 245, badge: "", imageUrl: "images/items/tobacco-love.jpg" },
+      { name: "قلیان مسکو", description: "تنباکوی مسکو با طعم خنک و تازه", price: 245, badge: "", imageUrl: "images/items/tobacco-moscow.jpg" },
+      { name: "قلیان آدامس دارچین", description: "تنباکوی آدامس دارچین با طعم شیرین و تند", price: 345, badge: "", imageUrl: "images/items/tobacco-cinnamon-gum.jpg" },
     ],
   },
 ];
@@ -710,15 +735,30 @@ function buildSpecials(){
 }
 
 function applyHero(){
-  const hero = $('.welcome-hero');
   const url = CAFE.heroImage || '';
-  if (url) {
-    hero.classList.add('has-img');
-    hero.style.setProperty('--hero', 'url("' + url + '")');
-    const mh = $('.menu-hero');
-    mh.classList.add('has-img');
-    mh.style.setProperty('--hero', 'url("' + url + '")');
-  }
+  if (!url) return;
+  const css = 'url("' + url + '")';
+  [$('.welcome-hero'), $('.menu-hero')].forEach(el => {
+    el.classList.add('has-img');
+    el.style.setProperty('--hero', css);
+  });
+}
+
+/* پیل‌های وضعیت — مشترک بین صفحه‌ی خوش‌آمد و هدر منو */
+function pillsHTML(){
+  const pills = [];
+  const st = openState();
+  if (st) pills.push('<span class="pill ' + st.cls + '">' + (st.cls === 'open' ? '🟢' : '🔴') +
+    ' <b>' + st.txt + '</b> ' + st.detail + '</span>');
+  if (CAFE.hours) pills.push('<span class="pill">🕐 ' + esc(CAFE.hours) + '</span>');
+  return pills.join('');
+}
+
+function buildMenuHeader(){
+  applyHero();
+  $('#m-name').textContent = CAFE.name;
+  $('#m-sub').textContent = CAFE.tagline || '';
+  $('#m-pills').innerHTML = pillsHTML();
 }
 
 function buildWelcome(){
@@ -727,13 +767,15 @@ function buildWelcome(){
   $('#w-tagline').textContent = CAFE.tagline || '';
   document.title = CAFE.name + ' | خوش آمدید';
 
-  /* برچسب‌های بالای صفحه */
-  const pills = [];
-  const st = openState();
-  if (st) pills.push('<span class="pill ' + st.cls + '">' + (st.cls === 'open' ? '🟢' : '🔴') +
-    ' <b>' + st.txt + '</b> ' + st.detail + '</span>');
-  if (CAFE.hours) pills.push('<span class="pill">🕐 ' + esc(CAFE.hours) + '</span>');
-  $('#w-pills').innerHTML = pills.join('');
+  /* برچسب‌های بالا + آمار سریع کافه */
+  $('#w-pills').innerHTML = pillsHTML();
+  const totalItems = CATEGORIES.reduce((n, c) => n + c.items.length, 0);
+  const totalSpecials = CATEGORIES.reduce((n, c) =>
+    n + c.items.filter(i => i.badge === 'special').length, 0);
+  $('#w-stats').innerHTML =
+    '<div class="wstat"><b>' + fa(totalItems) + '</b><span>آیتم در منو</span></div>' +
+    '<div class="wstat"><b>' + fa(CATEGORIES.length) + '</b><span>دسته‌بندی</span></div>' +
+    (totalSpecials ? '<div class="wstat"><b>' + fa(totalSpecials) + '</b><span>پیشنهاد ویژه</span></div>' : '');
 
   /* شبکه‌ی دسته‌ها — با یک لمس مستقیم می‌ره سر همون دسته */
   const grid = $('#catgrid');
@@ -887,6 +929,7 @@ function route(){
   if (h.indexOf('#/menu') === 0) {
     const catId = h.split('/')[2] || '';
     document.title = 'منو | ' + CAFE.name;
+    buildMenuHeader();
     show('menu');
     if (catId) {
       requestAnimationFrame(() => { scrollToCat(catId, false); spy(); });
@@ -921,6 +964,7 @@ addEventListener('hashchange', route);
 
 /* ─────────── راه‌اندازی ─────────── */
 fillFooter();
+buildMenuHeader();
 buildChips();
 buildSections();
 buildSpecials();
