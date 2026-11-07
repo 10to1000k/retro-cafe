@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://10to1000k.github.io/retro-cafe/sitemap.xml
