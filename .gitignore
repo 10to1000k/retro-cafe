@@ -2,3 +2,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+
+# ساخت ویدئوی تبلیغاتی (فایل‌های موقت)
+promo/build/
+promo/assets/
+promo/__pycache__/
