@@ -1,0 +1,6 @@
+# generated audio (rebuild with audio_build.py / music.py / audio_mix.py)
+vo.npy
+music.wav
+mix.wav
+frames/
+__pycache__/
